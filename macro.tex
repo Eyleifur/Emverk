@@ -1,0 +1,89 @@
+\usepackage{xifthen}
+
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\fb}{\mathbf{f}}
+\newcommand{\gb}{\mathbf{g}}
+\newcommand{\R}[1]{\mathbb{R}^{#1}}
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Sn}{\mathbb{S}_n}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Pb}{\mathbb{P}}
+\newcommand{\Eb}{\mathbb{E}}
+%\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\av}{\mathbf{a}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\balpha}{\bm{\alpha}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert} %Staðall
+\newcommand{\pnorm}[1]{\left\lVert#1\right\rVert_Q^p}
+\newcommand{\nnorm}[3]{\left\lVert#1\right\rVert_{#2}^{#3}} 
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu} %Flottari lína yfir staf
+\newcommand{\innf}[2]{\langle #1, #2 \rangle}
+\newcommand{\tproj}[2]{\pi_{#1}(#2)}
+\newcommand{\proj}[2]{\frac{\innf{#2}{#1}}{\innf{#1}{#1}}#1}
+\newcommand{\lambdamax}{\lambda_{\max}}
+\newcommand{\lambdamin}{\lambda_{\min}}
+\newcommand{\F}[2]{F_{#1,#2}}
+\newcommand{\G}[2]{G_{#1,#2}}
+\newcommand{\E}[1]{E_{#1}}
+\newcommand{\Q}[1]{Q_{#1}}
+\newcommand{\ein}{\Rightarrow \quad}
+\newcommand{\tvi}{\Leftrightarrow \quad}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sums}[2]{\sum\limits_{#1 = 1}^#2}
+\newcommand{\eqas}{\stackrel{\text{a.s.}}{=}}
+
+\usepackage{amsthm, bm}
+\usepackage{mathtools}
+\usepackage[numbered,framed]{matlab-prettifier}
+
+\lstset{
+  style              = Matlab-editor,
+  basicstyle         = \mlttfamily,
+  escapechar         = ",
+  mlshowsectionrules = true,
+}
+
+\newtheorem{theorem}{Theorem}[chapter]                                                                                                                                                                                                                                                                                   
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\if{
+\newtheorem{theorem+}           {Setning}      [section]
+\newtheorem{definition+}  [theorem+]  {Skilgreining}
+\newtheorem{lemma+}  [theorem+]  {Hjálparsetning}
+\newtheorem{corollary+}  [theorem+]  {Fylgisetning}
+\newtheorem{proposition+}  [theorem+]  {Proposition}
+\newtheorem{example+}  [theorem+]  {Dæmi}
+\newtheorem{question+}  [theorem+]  {Spurning}
+\newtheorem{remark+}  [theorem+]  {Athugasemd}
+}\fi
+
+\if{
+\newenvironment{theorem}{\begin{theorem+}\sl}{\end{theorem+}\rm}
+\newenvironment{definition}{\begin{definition+}\rm}{\end{definition+}\rm}
+\newenvironment{lemma}{\begin{lemma+}\sl}{\end{lemma+}\rm}
+\newenvironment{corollary}{\begin{corollary+}\sl}{\end{corollary+}\rm}
+\newenvironment{proposition}{\begin{proposition+}\sl}{\end{proposition+}\rm}
+\newenvironment{example}{\begin{example+}\rm}{\end{example+}\rm}
+\newenvironment{question}{\begin{question+}\rm}{\end{question+}\rm}
+\newenvironment{remark}{\begin{remark+}\rm}{\end{remark+}\rm}
+\renewenvironment{proof}{\medbreak\noindent{\it Sönnun:}\rm}{\hfill$\square$\rm}
+\newenvironment{prooftx}[1]{\medbreak\noindent{\it #1:}\rm}{\hfill$\square$\rm}
+}\fi
