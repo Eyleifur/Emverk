@@ -280,101 +280,6 @@ Let $Q$ be a symmetric $n\times n$ matrix. Then $Q$ is
 \end{theorem}
 To prove the theorem we need the following lemma.
 
-\if{
-\begin{lemma}\label{RealEig}
-The eigenvalues of a symmetric matrix are all real.
-\end{lemma}
-}\fi
-\if{
-\begin{proof}
-Let $Q$ be a symmetric matrix with eigenvalues $\lambda$ and a corresponding eigenvector $\x$. Then $Q\x = \lambda \x$ holds and since $Q$ is symmetric then $Q = Q^T = \overbar{Q}$. Thus
-\begin{align*}
-    \lambda \norm{\x}^2 &= \lambda \x^T \x\\
-    &= \x^T \lambda \x\\
-    &= \x^T Q \x\\
-    &= (\overbar{\x^T Q^T \x})^T\\
-    &= \overbar{\x}^T \overbar{Q} \overbar{\x}\\
-    &= \overbar{\x}^T \overbar{\lambda} \overbar{\x}\\
-    &= \overbar{\lambda}\norm{\overbar{\x}}^2\\
-    &= \overbar{\lambda}\norm{\x}^2.
-\end{align*}
-Since $\x$ is an eigenvector we have that $\norm{\x} > 0$ and $\lambda = \overbar{\lambda}$.
-\end{proof}
-}\fi
-\if{
-\begin{lemma}\label{OrthoEig}
-Eigenvectors of a symmetric matrix that correspond to different eigenvalues are orthogonal to one another.
-\end{lemma}
-}\fi
-\if{
-\begin{proof}
-Without loss of generality, it suffices to show this for two eigenvalues that are not equal. Let $\lambda_1$ and $\lambda_2$ be two different eigenvalues of the symmetric matrix $Q$ and let $\x_1$ and $\x_2$ be their corresponding eigenvectors. We want to show that $\innf{\x_1}{\x_2} = 0$. We get
-\begin{align*}
-    \lambda_1 \innf{\x_1}{\x_2} &= \lambda_1 \x_1^T \x_2\\
-    &= \x_1^T \lambda_1 \x_2\\
-    &= (\x_2^T \lambda_1 \x_1)^T\\
-    &= (\x_2^T Q \x_1)^T\\
-    &= \x_1^T Q \x_2\\
-    &= \x_1^T \lambda_2 \x_2\\
-    &= \lambda_2 \innf{\x_1}{\x_2}
-\end{align*}
-But $\lambda_1 \neq \lambda_2$ so we must have that $\innf{\x_1}{\x_2} = 0$.
-\end{proof}
-}\fi
-\if{
-\begin{lemma}\label{EigenInde}
-If $\lambda$ is an eigenvalue of multiplicity $k$ of an symmetric matrix then the corresponding eigenvectors $\x_1, \ldots, \x_k$ are linearly independent.
-\end{lemma}
-}\fi
-\if{
-The following lemma states that it is possible to orthogonalize these linearly independent eigenvectors with \textit{Gram-Schmidt} orthogonalization such that the vectors will still be eigenvectors of the symmetric matrix. The Gram-Schmidt process is the following.\\
-Define a projector $\pi$ with
-\begin{align}
-    \tproj{\y}{\x} = \proj{\y}{\x}.
-\end{align}
-If we have a set $K_1 = \{\x_1, \ldots, \x_k\}$ of linearly independent vectors then we can form a set $K_2 = \{\y_1, \ldots, \y_k\}$ of orthogonal vectors with
-\begin{align*}
-    \y_1 &= \x_1\\
-    \y_2 &= \x_2 - \tproj{\y_2}{\x_2}\\
-    &\vdotswithin{=}\\
-    \y_k &= \x_k - \sum_{i = 1}^{k - 1} \tproj{\y_k}{\x_k}
-\end{align*}
-such that $K_2$ spans the same space as $K_1$.
-}\fi
-\if{
-\begin{lemma}\label{GramEigen}
-Eigenvectors of a symmetric matrix that correspond to the same eigenvalue can be replaced with orthogonal eigenvectors created using the Gram-Schmidt orthogonalization.
-\end{lemma}
-}\fi
-\if{
-\begin{proof}
-Let $Q$ be a symmetric matrix with eigenvalue $\lambda$ of multiplicity $k$ and let $\x_1, \ldots, \x_k$ be the corresponding eigenvectors. The eigenvectors are linearly independent by Lemma \ref{EigenInde}. The Gram-Schmidt process gives us $k$ orthogonal vectors $\y_1, \ldots, \y_k$ from the eigenvectors $\x_1, \ldots, \x_k$. We want to show that the vectors $\y_1, \ldots, \y_k$ are also eigenvectors of $Q$ that correspond to the eigenvalue $\lambda$.\\
-Notice that
-\begin{align*}
-    Q\y_1 &= Q\x_1\\
-        &= \lambda \x_1\\
-        &= \lambda \y_1
-\end{align*}
-so $\y_1$ is an eigenvector of $Q$ that corresponds to $\lambda$.\\
-Now, let us assume that the vectors $\y_1, \ldots, \y_j$, $1 \leq j \leq k - 1$, are eigenvectors of $Q$ that correspond to $\lambda$. That is
-\begin{align}
-    Q\y_1 &= \lambda \y_1 \nonumber\\
-    &\vdotswithin{=} \label{ÞrepFor}\\
-    Q\y_j &= \lambda \y_j.\nonumber
-\end{align}
-Then we have
-\begin{align*}
-    Q\y_{j+1} &= Q\left(\x_{j + 1} - \sum_{i = 1}^{j} \tproj{\y_i}{\x_i}\right)\\
-    &= Q\x_{j + 1} - Q\sum_{i = 1}^j \proj{\y_i}{\x_i}\\
-    &= Q\x_{j + 1} - \sum_{i = 1}^j \frac{\innf{\x_i}{\y_i}}{\innf{\y_i}{\y_i}}Q\y_i\\
-    &\overset{(1.2)XXLagaref}{=} \lambda \x_{j + 1} - \sum_{i = 1}^j \frac{\innf{\x_i}{\y_i}}{\innf{\y_i}{\y_i}}\lambda\y_i\\
-    &= \lambda\left(\x_{j + 1} - \sum_{i = 1}^j \proj{\y_i}{\x_i}\right)\\
-    &= \lambda \y_{j + 1}.
-\end{align*}
-Therefore, we have proved the result by induction.
-\end{proof}
-}\fi
-
 \begin{lemma}\label{LemmaOrthogonalEigenvectors}
 Eigenvectors of a symmetric matrix are all real. Moreover, eigenvectors that correspond to different eigenvalues are orthogonal to one another. Furthermore, eigenvectors that correspond to the same eigenvalue can be replaced by orthogonal eigenvectors.
 \end{lemma}
@@ -441,13 +346,6 @@ Let $P$ and $D$ be as in the proof of Theorem \ref{ThmPosDefPosEig} and let $\x 
 \end{align*}
 where $\lambda_1, \ldots, \lambda_n$ are the eigenvalues of $Q$. The inequality $\lambdamin^\frac{p}{2}\norm{\x}^p \leq \pnorm{\x}$ is obtained by reversing the inequality in the calculation above and substituting $\lambdamax$ with $\lambdamin$.
 \end{proof}
-\if{
-By reversing the inequality sign and using $\lambda_{\text{min}}$ instead of $\lambdamax$ we also have the relation
-\begin{align*}
-    \pnorm{\x} \geq \lambda_{\text{min}}^\frac{p}{2} \norm{\x}^p
-\end{align*}
-for all $\x \in \R{n}$.
-}\fi
 
 Now, let us define \textit{linear matrix inequality} (LMI).
 
@@ -500,15 +398,6 @@ In this thesis we will use a more specific form of a BMI, namely
 \end{align}
 where $\x \in \R{n}$ and $F_0, F_i, G_{ij} \in \R{m \times m}$ are symmetric matrices, $i,j = 1, \ldots, n$.
 
-\if{
-\begin{definition}\label{BMIDefinition}
-A \textit{bilinear matrix inequality} is an inequality of the form
-\begin{align*}
-    F(\x) = F_0 + \sum_{i = 1}^m x_i F_i + \sum_{i = 1}^m \sum_{j = 1}^m x_ix_j G_{ij}
-\end{align*}
-where $\x \in \R{n}$ and $F_0, F_i, G_{ij} \in \R{n \times n}$ are symmetric matrices, $i,j = 1, \ldots, m$.
-\end{definition}
-}\fi
 Bilinear matrix inequalities are not generally convex which makes feasibility problems significantly more difficult computationally.
 
 For further properties and discussions on LMIs and BMIs see \citep{vABr2000lmibmi} and \citep{KZM2018BMI1}.
@@ -574,19 +463,6 @@ For a linear autonomous SDE with constant coefficients \eqref{autonomousConstant
 \end{theorem}
 
 See \citep{HGGS2018localLya} for a proof.
-
-
-\if{
-XXTakaÚt eða bæta við umræðu um local/global stöðugleika.
-A motivation for the next definition: given a confidence $0 < \gamma \leq 1$, how far can sample paths start from the origin and still tend to the origin as $t \to \infty$ with probability greater than or equal to $\gamma$?
-\begin{definition}
-Let $0 < \gamma \leq 1$. The set
-\begin{align*}
-    \left\{\x \in \R{n} \mid \Pb\left \{\lim_{t \to \infty}\norm{\X^\x(t)} = 0 \right\} \geq \gamma \right \}
-\end{align*}
-is called the $\gamma$-\textit{basin of attraction} ($\gamma$-BOA) of the equilibrium of the origin of the system \eqref{autonomousGeneralSDEeq}.
-\end{definition}
-}\fi
 
 Lyapunov functions are an important tool in the study of stability of SDEs and various concepts of stability can be characterized by the existence of a Lyapunov function, just as for deterministic systems defined by ODEs. For further reading on stability of ODEs see \citep{Hahn1967, vidya2002, Khalil1992, sastry1999}.
 
@@ -728,12 +604,6 @@ Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$,
             \frac{\partial V}{\partial x_r} (\x) &= \frac{p}{2}\nnorm{\x}{Q}{p - 2} \left(\sum_{i = 1}^n x_i Q_{r, i} + \sum_{i = 1}^n x_i Q_{i, r}\right)\\
             &= p\nnorm{\x}{Q}{p - 2} \sum_{i = 1}^n x_i Q_{r,i}\\
         \end{align*}
-        \if{
-        Since $T(\x) \coloneqq \sum_{i = 1}^n x_i Q_{r,i}$ is a continuous linear mapping there exists a constant $c > 0$ such that
-        \begin{align*}
-            |T(\x)| \leq c\norm{\x}
-        \end{align*}
-        by Theorem 7.2 in \citep{pryce1973basic}.}\fi
         Using the fact that
         \begin{align*}
             \left\lvert \sum_{i = 1}^n x_i Q_{r,i} \right\rvert \leq \sqrt{\sums{i}{n}x_i^2}\sqrt{\sums{i}{n} Q_{r,i}^2} = c\norm{\x}, \quad c \coloneqq \sqrt{\sums{i}{n} Q_{r,i}^2}
@@ -775,9 +645,6 @@ Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$,
     Note that the constant in the proof in \citep{Ha2019BMI} does not necessarily hold for all $1\leq r,s \leq n$ since the maximum is not taken, as is done here.
 \end{enumerate}
 \end{proof}
-\if{
-We will show how the problem of generating a Lyapunov function for the system \eqref{StoDiff} can be formulated using BMI. Our goal is to generate a symmetric positive definite matrix $Q$ such that condition $ii)$ holds, with $V(\x) = \pnorm{\x}$.\\
-}\fi
 
 Recall that the generator of the system \eqref{StoDiff} is
 \begin{align}\label{ConstantLVGenerator}
@@ -823,28 +690,7 @@ and rearranging gives us
 \begin{align}\label{H(x)Ineq1}
     H(\x) \geq \frac{2c_3}{p}\nnorm{\x}{Q}{4}.
 \end{align}
-\if
-since
-\begin{align*}
-    \frac{\pnorm{\x}}{\nnorm{\x}{Q}{p - 4}} &= \frac{(\x^TQ\x)^{p/2}}{(\x^TQ\x)^{(p-4)/2}}\\
-    &= \frac{(\x^TQ\x)^{p/2}}{(\x^TQ\x)^{p/2} (\x^T Q\x)^{-2}}\\
-    &= \nnorm{\x}{Q}{4}.
-\end{align*}
-\fi
 From Theorem \ref{Thm pnmorm norm relation} we have that
-\if
-Recall from Chapter \ref{KafliLMI&BMI} that a symmetric positive definite matrix $Q$ can be written in the form $Q = PDP^T$ where $D$ is a diagonal matrix which contains the eigenvalues of $Q$ on its diagonal and $P$ is a matrix whose columns are the orthonormal eigenvectors of $Q$. This is possible due to Lemmas \ref{OrthoEig} and \ref{GramEigen}. Now, set $\x = P\y$ and let $\lambda_1, \ldots, \lambda_n$ be the eigenvalues of $Q$ and $\lambda_{\text{max}} = \max(\lambda_1, \ldots, \lambda_n)$. Then
-\begin{align*}
-    \nnorm{\x}{Q}{4} Ö &= (\x^T Q\x)^2\\
-    &= (\y^TP^T Q P \y)^2\\
-    &= (\y^T D\y)^2\\
-    &= (\lambda_1 \y_1^2 + \ldots + \lambda_n \y_n^2)^2\\
-    &\leq (\lambdamax \y_1^2 + \ldots + \lambdamax \y_n^2)^2\\
-    &= \lambdamax^2 (\y^T I \y)^2\\
-    &= \lambdamax^2 (\x^T \x)^2.
-\end{align*}
-That is
-\fi
 \begin{align*}
     \nnorm{\x}{Q}{4} \leq \lambdamax^2 \norm{\x}^4.
 \end{align*}
@@ -856,12 +702,6 @@ with
 \begin{align*}
     c_3 = \frac{pc}{2 \lambdamax^2}
 \end{align*}
-\if{
-where
-\begin{align*}
-    c \coloneqq \frac{2c_3\lambdamax^2}{p}.
-\end{align*}
-}\fi
 
 We have transformed condition $ii)$ into a more manageable form. Since $ii)$ is a sufficient condition for any $c_3 > 0$ we also have that $H(\x) \geq c\nnorm{\x}{}{4}$ is sufficient for any $c > 0$. Now, if we can determine, or guarantee the existence of, $Q \succ 0$ and $c > 0$ such that $H(\x) \geq c\nnorm{\x}{}{4}$ holds for all $\x \in \R{n}\setminus \{\0\}$, then $V(\x) = \nnorm{\x}{Q}{p}$ is a Lyapunov function for the system \eqref{StoDiff} and the origin of the system is GASiP, by Theorem \ref{ThmLyaGasip}.
 
@@ -881,14 +721,6 @@ where $a, \sigma_u \in \R{}$. Our candidate function $V$ is
     V(x) = \pnorm{x} = x^p Q^{p/2}
 \end{align*}
 where $Q\in \R{}$, $Q > 0$ and $p > 0$. Inequality \eqref{H(x)Ineq3} becomes
-\if{
-As before, we look for $Q \in \R{}$, $Q > 0$ and $p > 0$ such that the Lyapunov function
-\begin{align}\label{Lyapunov function 1d}
-    V(x) = \pnorm{x} = \left(\sqrt{x^TQx}\right)^2 = \left(\sqrt{x^2 Q}\right)^2 = x^p Q^{p/2}
-\end{align}
-fulfills the condition of Theorem \ref{ThmLyaGasip}. We have shown that a function of this form fulfills all conditions of the theorem, except perhaps condition $ii)$. In the general case we need the method described in the following sections along with the program. However, for $n=1$ this problem becomes considerably easier.\\
-Recall that we have shown that condition $ii)$ is fulfilled if \eqref{H(x) definition} satisfies
-}\fi
 \begin{align*}
     H(x) \geq cx^4.
 \end{align*}
@@ -942,16 +774,6 @@ Consider the system \eqref{StoDiff} where $U = 1$ and $G$ is of the form $G = \s
     &= (-\x^T(F^TQ + QF + \sigma^2 Q)\x + \x^T (2-p)\sigma^2Q\x)\nnorm{\x}{Q}{2}.
 \end{align*}
 There exists $c > 0$ such that $H(\x) \geq c\nnorm{\x}{Q}{4}$ holds for all $\x \in \R{n}\setminus \{\0\}$ if and only if for all $\x \in \R{n}\setminus \{\0\}$ we have
-\if{
-Plugging this into (\ref{LV equation}) gives us
-\begin{align*}
-    LV(\x) = -\frac{p}{2}\left[-\x^T(F^TQ + QF + \sigma^2Q)\x + \x^T (2-p)\sigma^2 Q\x\right] \nnorm{\x}{Q}{p-2}.
-\end{align*}
-We can find $p > 0$ such that
-\begin{align*}
-    -\frac{p}{2}\left[-\x^T(F^TQ + QF + \sigma^2Q)\x + \x^T (2-p)\sigma^2 Q\x\right] < 0
-\end{align*}
-}\fi
 \begin{align*}
     &-\x^T(F^TQ + QF + \sigma^2 Q)\x + \x^T [(2-p)\sigma^2]Q\x > 0 \\
     \tvi&\x^T [(2-p)\sigma^2]Q\x > \x^T(F^TQ + QF + \sigma^2 Q)\x\\
@@ -1006,18 +828,6 @@ So system \eqref{StoDiff} with $F$ and $G$ as above has the Lyapunov function
 where $\varepsilon$ is small enough, e.g., $0 < \varepsilon < \frac{1}{2}\left(1 - \frac{2a}{\sigma^2}\right)$.
 
 Note that the LMI \eqref{LMI diagonal noise} was achieved without specifying $n$. We can therefore generalize this result.
-\if{
-\begin{theorem}[gamla útgáfa]\label{ThmLyapunovFunc sI Fas n2 U1}
-Let $F\in\R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetric matrix and $a \in \R{}$. Furthermore, let $G \in \R{n \times n}$ be of the form $G = \sigma I$, $\sigma\in \R{}$. Then the system
-\begin{align*}
-    d\X(t) = F\X(t)dt + G\X(t)dW(t)
-\end{align*}
-has the Lyapunov function $V(\x) = \norm{\x}^p$ if there exists $p$ such that
-\begin{align*}
-    0 < p < 1 - \frac{2a}{\sigma^2}.
-\end{align*}
-\end{theorem}
-}\fi
 \begin{theorem}\label{ThmLyapunovFunc sI Fas n2 U1}
 Let $F\in\R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetric matrix and $a \in \R{}$. Furthermore, let $G \in \R{n \times n}$ be of the form $G = \sigma I$, $\sigma\in \R{}$. Then the origin of the system
 \begin{align*}
@@ -1031,19 +841,6 @@ is GASiP if and only if
 
 Note that we have $U = 1$ in Theorem \ref{ThmLyapunovFunc sI Fas n2 U1}. However, we can generalize this result further for any value of $U > 0$
 
-\if{
-\begin{theorem}[gamla útgáfa]
-Let $F\in \R{n\times n}$ be of the form $F = A + aI$ where $A$ is antisymmetric matrix and $a \in \R{}$. Furthermore, let $G^u \in \R{n\times n}$ be of the form $G^u = \sigma_u I$, $u = 1,\ldots, U$. Then the system
-\begin{align*}
-    d\X(t) = F\X(t)dt + \sum_{u = 1}^U G^u\X(t)dW_u(t)
-\end{align*}
-has the Lyapunov function $V(\x) = \norm{\x}^p$ if there exists $p$ such that
-\begin{align*}
-    0 < p < 1 - \frac{2a}{S}
-\end{align*}
-where $S = \sum\limits_{u = 1}^U \sigma_u^2$.
-\end{theorem}
-}\fi
 \begin{theorem}
 Let $F\in \R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetric matrix and $a \in \R{}$. Furthermore, let $G^u \in \R{n\times n}$ be of the form $G^u = \sigma_u I$, $u = 1,\ldots, U$. Then the origin of the system
 \begin{align*}
@@ -1055,36 +852,6 @@ is GASiP if and only if
 \end{align*}
 where $S = \sum\limits_{u = 1}^U \sigma_u^2$.
 \end{theorem}
-
-\if
-Hér var ég að pæla hvort að niðurstöðurnar hér að ofan eða niðurstöður í þá áttina gilda einnig ef það eru mismunandi gildi á hornalínunni en ekki þau sömu. Það er, ef við höfum fyrir $n = 2$
-\begin{align*}
-    F = \begin{pmatrix}
-    a_1 & -b\\
-    b & a_2
-    \end{pmatrix}
-\end{align*}
-$a_1, a_2 \in \R{}$. Þá er
-\begin{align*}
-    F^T + F = \begin{pmatrix}
-    2a_1 & 0\\
-    0 & 2a_2
-    \end{pmatrix}.
-\end{align*}
-Gildir þá
-\begin{align*}
-    (1 - p)\sigma^2 \succeq \begin{pmatrix}
-    2a' & 0\\
-    0 & 2a'
-    \end{pmatrix}
-    \succeq
-    \begin{pmatrix}
-    2a_1 & 0\\
-    0 & 2a_2
-    \end{pmatrix}
-\end{align*}
-og þá $(1 - p)\sigma^2 \geq 2a'$ þar sem $a' = \max\{a_1, a_2\}$?
-\fi
 
 We have been looking at systems where $F$ is of the form $F = A + aI$, $a \in \R{}$, i.e. when we have the same value on the whole diagonal. What happens if we allow different values on the diagonal? Let $G^u$ be as before. If we let $\av = (a_1, \ldots, a_n)\in \R{n}$ and look at $F = A + \diag(\av)$ then we get from \eqref{LMI diagonal noise} that
 \begin{align*}
@@ -1105,19 +872,7 @@ which leads to
     \end{pmatrix}
 \end{align*}
 where $a' \coloneqq \max\{a_1, \ldots, a_n\}$ and $S = \sum\limits_{u = 1}^U \sigma_u^2$.
-\if{
-\begin{theorem}[gamla útgáfa]
-Let $F \in \R{n\times n}$ be of the form $F = A + \diag(\av)$ where $A$ is antisymmetric and $\av\in\R{}$. Furthermore, let $G^u \in \R{n \times n}$ be of the form $G^u = \sigma_u I$, $u = 1,\ldots, n$. Then the system
-\begin{align*}
-    d\X(t) = F\X(t)dt + \sum_{u = 1}^U G^u\X(t)dW_u(t)
-\end{align*}
-has the Lyapunov function $V(\x) = \norm{\x}^p$ if there exists $p$ such that
-\begin{align*}
-    0 < p < 1 - \frac{2a'}{S}
-\end{align*}
-where $a' = \max\{a_1, \ldots a_n\}$ and $S = \sum\limits_{u = 1}^U \sigma_u^2$.
-\end{theorem}
-}\fi
+
 \begin{theorem}\label{ThmSpecialCaseAlmennast}
 Let $F \in \R{n\times n}$ be of the form $F = A + \diag(\av)$ where $A$ is an antisymmetric matrix and $\av\in\R{n}$. Furthermore, let $G^u \in \R{n \times n}$ be of the form $G^u = \sigma_u I$, $u = 1,\ldots, U$. Then the origin of the system
 \begin{align*}
@@ -1163,29 +918,11 @@ Therefore, we want to determine the values $c, Q_1, \ldots, Q_m,$ $P_1, \ldots, 
 \begin{align*}
     &c > 0\\
     &Q
-    \if{
-    = \begin{pmatrix}
-    Q_1 & Q_2 & \hdots & Q_n\\
-    Q_2 & Q_{n + 1} & \hdots & Q_{2n-1}\\
-    \vdots & \vdots & \ddots & \vdots\\
-    Q_n & Q_{2n - 1} & \hdots & Q_{m}
-    \end{pmatrix}
-    }\fi
     \succ 0\\
     &P
-    \if{
-    = \begin{pmatrix}
-    P_1 & P_2 & \hdots & P_m\\
-    P_2 & P_{m + 1} & \hdots & P_{2m - 1}\\
-    \vdots & \vdots & \ddots & \vdots\\
-    P_m & P_{2m - 1} & \hdots & P_k
-    \end{pmatrix}
-    }\fi
     \succeq 0.
 \end{align*}
 and $P_c = P_\z$, where $Q_1, \ldots, Q_m$ and $P_1, \ldots, P_k$ are the upper triangular elements of $Q$ and $P$, respectively. The next theorem states that if $P \succeq 0$ then the polynomial $P_\z$ is a sum-of-squared polynomials. Note that $P_\z = \z^T P \z$ is a fourth order polynomial in $x_1, \ldots, x_n$ and we write $P_\z(\x)$ for $\z^T P \z$ when we substitute the value $\x \in \R{n}$ for the variables $x_1, \ldots, x_n$ in $\z^T P \z$.
-\if, except possibly condition $ii)$ because of $Q \succ 0$ XXMögulegaÚtskýraÞetta?. However, condition $ii)$ is fulfilled since the polynomial $P_c(\x) = P_\z$ is a sum of squared polynomials and is therefore non-negative.
-\fi
 \begin{theorem}
 If $P \succeq 0$ then the polynomial $P_\z = \z^T P \z$ is a sum of squared polynomials. Thus \begin{align*}
     P_\z(\x) \geq 0, \quad \forall \x \in \R{n}.
@@ -1199,10 +936,6 @@ By Lemma \ref{LemmaOrthogonalEigenvectors} we can write the matrix $P$ as
 where $D \in \R{m \times m}$ is a diagonal matrix whose diagonal contains the eigenvalues of $P$ and $B \in \R{m \times m}$ is a matrix whose columns are the orthogonal eigenvectors of $P$. Since $P$ is a positive semi-definite matrix its eigenvalues are all non-negative, by Theorem \ref{ThmPosDefPosEig}.
 
 Let $(\bb_i)_{1\leq i \leq m}$ be the orthogonal column vectors of $B$
-\if, i.e. $B = \begin{bmatrix}
-\bb_1 & \cdots & \bb_m
-\end{bmatrix}$.
-\fi
 and let $\lambda_1, \lambda_2, \ldots, \lambda_m$ be the eigenvalues of $P$. Then we have
 \begin{align*}
     P_\z &= \z^T P \z = \z^T B D B^T \z\\
@@ -1228,10 +961,7 @@ where each of $\innf{\z}{\bb_i} \coloneqq \sum\limits_{j = 1}^m b_{ji}z_j$, $1 \
 
 To determine the values of $c$, $Q$ and $P$ such that $P_c(\x) = P_\z$ we need to find relationships between the coefficients of $P_c$ and $P_\z$. Notice that $P_c(\x) = H(\x) - c\norm{\x}^4$ is a homogeneous polynomial of order $4$ since $H(\x)$ is a homogeneous polynomial of order $4$, by Theorem \ref{LemmaH(x)Homogeneous}. Also, the polynomial $P_\z$ only contains terms of order $4$. It is a sum of squared polynomials where the terms of the squared polynomials are the elements of $\z$. So, to get the relations between the coefficients of the two polynomials we can equate all fourth order partial derivatives of the polynomials with respect to $\x$.
 
-Let's define the set $M_n$ as the set of all $n$-dimensional multi-indices of length 4, i.e. $M_n \coloneqq \{\balpha \in \R{n} \mid |\balpha| = 4\}$
-\if $M_n \coloneqq \{(k_1, k_2, \ldots, k_n) \in \N^n \mid \sum\limits_{j = 1}^n k_j = 4\}$
-\fi
-and let $\alpha^n(i)$ be the $i$-th element of $M_n$ in reverse lexicographical order. For example
+Let's define the set $M_n$ as the set of all $n$-dimensional multi-indices of length 4, i.e. $M_n \coloneqq \{\balpha \in \R{n} \mid |\balpha| = 4\}$ and let $\alpha^n(i)$ be the $i$-th element of $M_n$ in reverse lexicographical order. For example
 \begin{align*}
     \alpha^2(1) &= (4, 0)\\
     \alpha^2(2) &= (3, 1)\\
@@ -1253,24 +983,6 @@ The cardinality of the set $M_n$ is
     |M_n| = n + n(n - 1) + \frac{n(n - 1)}{2} + \frac{n(n - 1)(n - 2)}{2} + \binom{n}{4}\mathbf{1}_{n\geq 4}
 \end{align*}
 \end{theorem}
-\if{
-\begin{proof}
-\begin{enumerate}[1)]
-    \item There are $n$ tuples of type $1: [4]$. We can put a $4$ in any of the $n$ places. The rest is zero.
-    \item We can put $3$ in any of the $n$ places, then we have $n - 1$ places to put the $1$. Total of $n(n - 1)$ tuples
-    \item Same as 2) except we divide by $2$ because of duplicates. Total of $\frac{n(n-1)}{2}$ tuples
-    \item We can put a $2$ in $n$ spots, the two $1$'s in $n - 1$ and $n - 2$ spots and divide by two because of duplicates. Total of $\frac{n(n - 1)(n - 2)}{2}$ tuples
-    \item We can choose 4 spots from a total of $n$ spots for the $1$'s. Total of $\binom{n}{4}$ tuples.
-\end{enumerate}
-Note that if $n \leq 3$ then a tuple of the form $[1,1,1,1]$ isn't possible. Thus, the cardinality of the set $M_n$ is
-\begin{align*}
-    |M_n| = \begin{cases}
-    n + n(n - 1) + \frac{n(n - 1)}{2} + \frac{n(n - 1)(n - 2)}{2} & n \leq 3\\
-    |M_3| + \binom{n}{4} & n \geq 4
-    \end{cases}
-\end{align*}
-\end{proof}
-}\fi
 The proof is obtained with elementary combinatorics, where each term in the formula corresponds to the number of elements in a type. I.e. type 1 has $n$ elements, type 2 has $n(n - 1)$ elements, etc.
 
 Let's do a little recap. We want to determine the values of $c$, $Q$ and $P$ such that $c > 0$, $Q \succ 0$, $P \succeq 0$ and $P_c(\x) = P_\z$. To achieve the equality $P_c = P_\z$ we have to form a relationship between the coefficients of the terms of the polynomials. That relationship is formed by equating all the fourth order partial derivatives of $P_c$ and $P_\z$ in terms of $\x$. Namely,
@@ -1352,34 +1064,6 @@ instead of $F_{i,j}$ and $G_{i,j}$.
     & + (-2)c&&
 \end{flalign*}
 
-\if{
-\begin{equation}%\label{RelationsWrittenOut n2}
-\begin{split}
-    P_1 &= \Big[-2f_1 - (p - 2)g_1^2 - g_1^2\Big]Q_1^2\\
-    &\quad -2\Big[f_3 - g_1g_3 - (p - 2)g_1g_3\Big]Q_1Q_2\\
-    &\quad + (-g_3)^2 Q_1Q_3\\
-    &\quad + \Big[-(p - 2)g_3^2\Big]Q_2^2\\
-    &\quad + (0)Q_2Q_3\\
-    &\quad + (0)Q_3^2\\
-    &\quad - c\\
-    P_2 &= \Big[-f_2 - g_1g_2 - g_1g_2(p - 2)\Big]Q_1^2\\
-    &\quad + \Big[-3f_1 - f_4 - g_1^2 - g_1g_4 - g_2g_3 - g_2g_3(p - 2) - (p - 2)g_1(g_1 + g_4)\Big]Q_1Q_2\\
-    &\quad + \Big[-f_3 - g_3g_4 - g_1g_3(p - 2)\Big]Q_1Q_3\\
-    &\quad + \Big[-2f_3 - 2g_1g_3 - (p - 2)g_3(g_1 + g_4)\Big]Q_2^2\\
-    &\quad + \Big[(p - 2)g_3^2 - g_3^2\Big]Q_2Q_3\\
-    &\quad + (0)Q_3Q_3\\
-    &\quad + (0)c\\
-    2P_3 + P_4 &= \Big[g_2^2(2 - p) - g_2^2\Big]Q_1Q_1\\
-    &\quad + \Big[-6f_2 - 4g_1g_2 - 2g_2g_4 - 2g_1g_2(p - 2) - g_2(p - 2)(2g_1 + 2g_4)\Big]Q_1Q_2\\
-    &\quad + \Big[-2f_1 - 2f_4 - g_1^2 - g_4^2 - 2g_1g_4(p - 2) - 2g_2g_3(p - 2)\Big]Q_1Q_3\\
-    &\quad + \Big[-4f_1 - 4f_4 - (p - 2)(g_1 + g_4)^2 - 4g_1g_4 - 4g_2g_3 - 2g_2g_3(p - 2)\Big] Q_2Q_2\\
-    &\quad + \Big[-f_3 - 2g_1g_3 - 4g_3g_4 - 2g_3g_4(p - 2) - g_3(p - 2)(2g_1 + 2g_4)\Big] Q_2Q_3\\
-    &\quad + \Big[-g_3^2(p - 2) - g_3^2\Big]Q_3Q_3\\
-    &\quad + (-2)c
-\end{split}
-\end{equation}
-}\fi
-
 \begin{flalign*}
     P_5 &= (0)Q_1Q_1&&\\
     &\quad + \Big[-g_2^2(p - 2) - g_2^2\Big]Q_1Q_2&&\\
@@ -1400,26 +1084,6 @@ instead of $F_{i,j}$ and $G_{i,j}$.
     &\quad + (-1)c&&
 \end{flalign*}
 
-\if{
-\begin{equation}
-\begin{split}
-    P_5 &= (0)Q_1Q_1\\
-    &\quad + \Big[-g_2^2(p - 2) - g_2^2\Big]Q_1Q_2\\
-    &\quad + \Big[-f_2 - g_1g_2 - g_2g_4(p - 2)\Big]Q_1Q_3\\
-    &\quad + \Big[-2f_2 - 2g_2g_4 - g_2(2 - p)(g_1 + g_4)\Big]Q_2Q_2\\
-    &\quad + \Big[-f_1 - 3f_4 - g_4^2 - g_1g_4 - g_2g_3 - g_2g_3(p - 2) - g_4(p - 2)(g_1 + g_4)\Big]Q_2Q_3\\
-    &\quad + \Big[-f_3 - g_3g_4 - g_3g_4(p - 2)\Big]Q_3Q_3\\
-    &\quad + (0)c\\
-    P_6 &= (0)Q_1Q_1\\
-    &\quad + (0)Q_1Q_2\\
-    &\quad + (-g_2^2)Q_1Q_3\\
-    &\quad + \Big[-g_2^2(p - 2)\Big]Q_2Q_2\\
-    &\quad + \Big[-2f_2 - 2g_2g_4 - 2g_2g_4(p - 2)\Big]Q_2Q_3\\
-    &\quad + \Big[-2f_4 - g_4^2(p - 2) - g_4^2\Big]Q_3Q_3\\
-    &\quad + (-1)c
-\end{split}
-\end{equation}
-}\fi
 As one can imagine, with a higher $n$ and a greater number of $G$ matrices, these relations become unwieldy and a help from a computer is needed.
 
 Note that in some cases we are unable to write each element of the matrix $P$ only in terms of the elements of matrix $Q$ and $c$. There is a dependence between different elements of $P$. Above we can see that $P_3$ and $P_4$ are dependent which will need special considerations further on. We would like to know when these dependent relations happen and how many dependent variables there are in the relations in the general case.
@@ -1475,7 +1139,7 @@ The number of dependent relations in a problem of size $n$ is
 \end{align*}
 \end{corollary}
 \begin{proof}
-We get dependent relations only when $\alpha^n$ is of type $3:\, [2,2]$, $4: [2,1,1]$ or $5: [1,1,1,1]$ by Theorem \ref{Thm dependent variables in relations}. Therefore, we only need to count the number of occurrences of each type. This is done in the proof of Theorem \ref{ThmCardinalityOfMn}.\if{See proof of Theorem \ref{ThmCardinalityOfMn}}\fi
+We get dependent relations only when $\alpha^n$ is of type $3:\, [2,2]$, $4: [2,1,1]$ or $5: [1,1,1,1]$ by Theorem \ref{Thm dependent variables in relations}. Therefore, we only need to count the number of occurrences of each type. This is done in the proof of Theorem \ref{ThmCardinalityOfMn}.
 \end{proof}
 
 
@@ -1533,8 +1197,8 @@ Let us denote $f$ as the left hand side of a dependent relation and $g$ the righ
 
 Note that the placement of the constraints in $M$ does not matter. This order was chosen since this was the order used in the original paper \citep{Ha2019BMI} and in the Matlab program. Visually, the constraints are implemented as follows
 
-\footnotesize{
 \begin{align*}
+\footnotesize{
     \begin{pmatrix}
     P \succeq 0 & & & & & & &\\
       & f_1 - g_1 \geq 0 & & & & & &\\
@@ -1545,8 +1209,8 @@ Note that the placement of the constraints in $M$ does not matter. This order wa
       & & & & & & Q - \varepsilon I \succeq 0 &\\
       & & & & & & & c - \varepsilon \geq 0
     \end{pmatrix}.
+    }
 \end{align*}
-}
 
 Recall our BMI \eqref{BMIgeneralNotDefinition}
 \begin{align*}
@@ -1568,20 +1232,10 @@ where $i,j = 1, \ldots, N$.
 
 
 The matrix $A_{ij}$ corresponds to the variables $q_iq_j$ so we want the elements of $A_{ij}$ to be the coefficients of $q_iq_j = Q_iQ_j$ in the relations \eqref{RelationsGeneralCase}. So where in the matrix $A_{ij}$ do the coefficients belong? We look at the left side of the relations at the elements of $P$. If the relation is of the form
-\if{
-\begin{align*}
-    P_{kl} = \rho Q_i Q_j + \eta Q_i Q_{j + 1} + \zeta Q_i Q_{j + 1},\quad k,l = 1, \ldots, m, \, k \leq l.
-\end{align*}
-}\fi
 \begin{align*}
     P_{kl} = \sum_{i = 1}^n\sum_{j = i}^n \rho_{ij}Q_iQ_j + \eta c, \quad 1 \leq k \leq l \leq m
 \end{align*}
 then we take the coefficient of $Q_iQ_j$, which is $\rho_{ij}$, and multiply it with the matrix $\E{kl}$, since the constraint of $P \succeq 0$ is implemented in $M_{1:m, 1:m}$. However, if the relation is of the form
-\if{
-\begin{align*}
-    P_{kl} + P_{rs} = \rho Q_i Q_j + \eta Q_i Q_{j + 1} + \zeta Q_i Q_{j + 1},\quad k,l,r,s = 1, \ldots, m, \, k \leq l, r\leq s.
-\end{align*}
-}\fi
 \begin{align*}
     P_{kl} + P_{rs} = \sum_{i = 1}^n\sum_{j = i}^n \rho_{ij}Q_iQ_j + \eta c, \quad k,l,r,s = 1, \ldots, m, \, k \leq l, r\leq s.
 \end{align*}
