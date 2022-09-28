@@ -7,10 +7,10 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[icelandic, english]{babel}
 \usepackage{t1enc}
+\usepackage{url}
 \usepackage{graphicx}
 \usepackage[intoc]{nomencl}
 \usepackage{enumerate,color}
-\usepackage{url}
 \usepackage[pdfborder={0 0 0}]{hyperref}
 \usepackage{appendix}
 \usepackage{eso-pic}
@@ -24,6 +24,7 @@
 \usepackage[format=plain,labelformat=simple,labelsep=colon]{caption}
 \usepackage{placeins}
 \usepackage{tabularx}
+
 
 \newcommand{\SFH}[1]{\textcolor{red}{#1}}
 
@@ -55,7 +56,7 @@
 \def\thesisyear{2022}       						% Year thesis submitted
 \def\thesismonth{September}						% Month thesis submitted
 \def\thesisauthor{Eyleifur Ingþór Bjarkason}					% Thesis authoreiningaraðferðinni
-\def\thesistitle{Lyapunov Functions for Linear Stochastic Differential Equations by Bilinear Matrix Inequalites} 						% Title of thesis
+\def\thesistitle{Lyapunov Functions for Linear Stochastic Differential Equations by Bilinear Matrix Inequalities} 						% Title of thesis
 \def\thesissubtitle{Theory and Implementation}
 \def\thesisshorttitle{Lyapunov Functions for SDEs by BMIs} 	% Title of thesis
 \def\thesiscredits{60} 							% Credits awarded for the project
@@ -230,7 +231,7 @@ The stability of dynamical systems has been studied for over hundred years start
 \begin{align}\label{EqIntro Deterministic system}
     \Dot{\x} = A\x,\quad A \in \R{n\times n}
 \end{align}
-is asymptotically stable, i.e. every solution $\x$ satisfies $\lim\limits_{t\to\infty} \x(t) = 0$, if and only if $A$ is \textit{Hurwitz}, that is, all real parts of the eigenvalues of $A$ are negative. This is equivalent to computing a quadratic Lyapunov function $V(\x) = \x^T Q \x$ by finding a positive definite matrix $Q$ (see Definition \ref{Definition PosDef}) such that
+is asymptotically stable, i.e.~every solution $\x$ satisfies $\lim\limits_{t\to\infty} \x(t) = 0$, if and only if $A$ is \textit{Hurwitz}, that is, all real parts of the eigenvalues of $A$ are negative. This is equivalent to computing a quadratic Lyapunov function $V(\x) = \x^T Q \x$ by finding a positive definite matrix $Q$ (see Definition \ref{Definition PosDef}) such that
 \begin{align*}
     A^TQ + QA \prec 0.
 \end{align*}
@@ -238,7 +239,7 @@ This inequality is called a Lyapunov inequality and is a special form of an LMI 
 \begin{align*}
     A^TQ + QA = -P.
 \end{align*}
-for $Q$. If \eqref{EqIntro Deterministic system} is stable then $Q$ is guaranteed to be positive definite.
+for $Q$. If \eqref{EqIntro Deterministic system} is stable then a solution $Q$ exists and is guaranteed to be positive definite.
 
 Stability of stochastic differential equations can also be analyzed with Lyapunov functions. However, the study of stability of stochastic dynamical systems is a more immature subject. Methods and procedures to calculate Lyapunov functions for SDEs are generally not available, even for autonomous, linear SDEs. In \citep{HGGS2018localLya} a method was developed to confirm if an ansatz for a Lyapunov function of an autonomous, linear SDE with constant coefficients was indeed a Lyapunov function of the system. Thus proving global asymptotic stability in probability of the zero solution. This was achieved by determining if a certain polynomial was non-negative using sum-of-squares programming. In \citep{Ha2019BMI} they improved upon this method by formulating the conditions for a Lyapunov function as a BMI (see Definition \ref{BMIDefinitionGeneral}).
 
@@ -260,7 +261,7 @@ We denote positive definiteness with $Q \succ 0$. Similarly, the matrix $Q$ is s
 \end{align*}
 We denote this with $Q \succeq 0$.
 \end{definition}
-Equivalently, $Q \prec 0$ denotes that $Q$ is \emph{negative definite}, i.e. $-Q \succ 0$ and $Q \preceq 0$ denotes that $Q$ is \emph{negative semi-definite}, i.e. $-Q \succeq 0$.
+Equivalently, $Q \prec 0$ denotes that $Q$ is \emph{negative definite}, i.e.\@ $-Q \succ 0$ and $Q \preceq 0$ denotes that $Q$ is \emph{negative semi-definite}, i.e.\@ $-Q \succeq 0$. Further, if $Q$ and $P$ are symmetric matrices we write $Q \succ P$ if $Q - P \succ 0$. Note that $\succ$ is a partial ordering on the set of all symmetric matrices.
 
 Let $Q$ be a symmetric positive definite matrix and $p > 0$. Then we define
 \begin{align*}
@@ -272,10 +273,10 @@ From the eigenvalues of a symmetric matrix $Q$ one can determine the definitenes
 \begin{theorem}\label{ThmPosDefPosEig}
 Let $Q$ be a symmetric $n\times n$ matrix. Then $Q$ is
 \begin{enumerate}[i)]
-    \item positive definite if and only if all the eigenvalues of $Q$ are strictly positive.
-    \item negative definite if and only if all the eigenvalues of $Q$ are strictly negative.
-    \item positive semi-definite if and only if all the eigenvalues of $Q$ are positive.
-    \item negative semi-definite if and only if all the eigenvalues of $Q$ are negative.
+    \item positive definite if and only if all the eigenvalues of $Q$ are positive ($>0$).
+    \item negative definite if and only if all the eigenvalues of $Q$ are negative ($<0$).
+    \item positive semi-definite if and only if all the eigenvalues of $Q$ are non-negative ($\geq 0$).
+    \item negative semi-definite if and only if all the eigenvalues of $Q$ are non-positive ($\leq 0$).
 \end{enumerate}
 \end{theorem}
 To prove the theorem we need the following lemma.
@@ -302,7 +303,7 @@ Particularly, if $\vv$ is an eigenvector of $Q$ with corresponding eigenvalue $\
 \end{align*}
 Now, $\vv$ is an eigenvector so $\vv \neq \0$ and $\norm{\vv} > 0$. Therefore, $\lambda > 0$.
 
-Let's now assume that all eigenvalues of $Q$ are strictly positive. We want to show that $\x^T Q \x > 0$ holds for all $\x \in \R{n}$. According to Lemma \ref{LemmaOrthogonalEigenvectors} the eigenvectors of $Q$ are orthogonal and they can be normalized such that their length is 1. Let $\lambda_1, \ldots, \lambda_n$ be the eigenvalues of $Q$ and $\vv_1, \ldots, \vv_n$ be their corresponding orthonormal eigenvectors. Now, let $P$ be the $n\times n$-matrix whose columns are the eigenvectors $\vv_1, \ldots, \vv_n$ and let $D$ be the $n\times n$-matrix whose diagonal contains the eigenvalues $\lambda_1, \ldots, \lambda_n$. Since the columns of $P$ are orthonormal we have
+Let's now assume that all eigenvalues of $Q$ are strictly positive. We want to show that $\x^T Q \x > 0$ holds for all $\x \in \R{n}$. According to Lemma \ref{LemmaOrthogonalEigenvectors} the eigenvectors of $Q$ are orthogonal and they can be normalized such that their length is 1. Let $\lambda_1, \ldots, \lambda_n$ be the eigenvalues of $Q$ and $\vv_1, \ldots, \vv_n$ be their corresponding orthonormal eigenvectors. Now, let $P$ be the $n\times n$ matrix whose columns are the eigenvectors $\vv_1, \ldots, \vv_n$ and let $D$ be the $n\times n$ matrix whose diagonal contains the eigenvalues $\lambda_1, \ldots, \lambda_n$. Since the columns of $P$ are orthonormal we have
 \begin{align*}
     PP^T = I
 \end{align*}
@@ -390,7 +391,7 @@ A \textit{bilinear matrix inequality} is an inequality of the form
     \begin{align}
         F(\x, \y) = F_0 + \sum_{i = 1}^nx_iF_i + \sum_{j = 1}^m y_jG_j + \sum_{i = 1}^n \sum_{j = 1}^m x_iy_j H_{ij} \succ 0
     \end{align}
-where $x\in \R{n}$, $y\in \R{m}$ and $F_0, F_i, G_j, H_{ij}$ are symmetric matrices of the same size, $i = 1, \ldots, n$, $j = 1, \ldots, m$.
+where $\x\in \R{n}$, $\y\in \R{m}$ and $F_0, F_i, G_j, H_{ij}$ are symmetric matrices of the same size, $i = 1, \ldots, n$, $j = 1, \ldots, m$.
 \end{definition}
 In this thesis we will use a more specific form of a BMI, namely
 \begin{align}\label{BMIDefinition}
@@ -416,7 +417,7 @@ where $\fb = (f_1, \ldots, f_n)^T$, $\gb^u = (g_1^u,\ldots,g_n^u)^T$, and $f_i, 
 \begin{align}\label{GeneralSDEeq}
     d\X(t) = \fb(t, \X(t))dt + \sum\limits_{u=1}^U\gb(t, \X(t))dW_u(t).
 \end{align}
-For the conditions that guarantee existence and uniqueness of a solution to \eqref{GeneralSDEeq} see \citep{mao2007stochastic}.
+For the conditions that guarantee existence and uniqueness of a solution to \eqref{GeneralSDEeq} see \citep{mao2007stochastic}. Note that for \eqref{autonomousConstantCoeffSDEeq} these conditions are met.
 
 The integral form of \eqref{autonomousConstantCoeffSDEeq} is
 \begin{align}\label{autonomousIntegralSDEeq}
@@ -436,7 +437,7 @@ The zero solution $\X(t) \eqas 0$ to the SDE \eqref{autonomousGeneralSDEeq} is s
     \end{align*}
     \item \textit{Asymptotically stable in probability} (ASiP) if it is SiP and for every $0 < \varepsilon < 1$ there exists a $\delta > 0$ such that
     \begin{align*}
-        \Pb\left\{\lim_{t\to \infty}\norm{\X^x(t)} = 0\right\} \geq 1 - \varepsilon \quad \text{for all } \norm{\x}\leq \delta.
+        \Pb\left\{\lim_{t\to \infty}\norm{\X^\x(t)} = 0\right\} \geq 1 - \varepsilon \quad \text{for all } \norm{\x}\leq \delta.
     \end{align*}
     \item \textit{Globally asymptotically stable in probability} (GASiP) if it is SiP and for any $\x \in \R{n}$ we have
     \begin{align*}
@@ -476,7 +477,7 @@ Let $\bm{\phi}(t,\x)$ be the unique solution of the deterministic system $\Dot{\
 \begin{align*}
     \left. \frac{d}{dt}V(\bm{\phi}(t,\x))\right\rvert_{t = 0} = \nabla V(\x)\cdot \fb(\x)
 \end{align*}
-which has a stochastic counterpart, the so-called \textit{generator}, which we get by adding a drift term.
+which has a stochastic counterpart, the so-called \textit{generator}.
 
 \begin{definition}
     Consider the SDE \eqref{autonomousGeneralSDEeq}. The \textit{generator} associated with the system for some appropriately differentiable $V \colon \mathcal{U} \to \R{}$, $\mathcal{U} \subset \R{n}$ is given by
@@ -485,7 +486,7 @@ which has a stochastic counterpart, the so-called \textit{generator}, which we g
     \end{align}
 \end{definition}
 
-In the case of the linear autonomous SDE with constant coefficents \eqref{autonomousConstantCoeffSDEeq} the generator is
+In the case of the linear autonomous SDE with constant coefficients \eqref{autonomousConstantCoeffSDEeq} the generator is
 
 \begin{align}
     LV(\x) = \sums{i,j}{n}F_{ij}x_j\frac{\partial V}{\partial x_i}(\x) + \frac{1}{2}\sums{i,j,k,l}{n}\sums{u}{U}x_k x_l G_{ik}^u G_{jl}^u \frac{\partial^2 V}{\partial x_i \partial x_j}(\x)
@@ -524,7 +525,7 @@ Assume there exist constants $c_1, c_2, c_3, p > 0$ and a function $V\in C(\math
 Then the origin of \eqref{autonomousGeneralSDEeq} is $p$-ES.
 \end{theorem}
 
-The next theorem, the so-called converse theorem, asserts the existence of a Lyapunov function of the system \eqref{autonomousConstantCoeffSDEeq} if the origin is ASiP.
+The next theorem, the so-called converse theorem, asserts the existence of a Lyapunov function of the system \eqref{autonomousConstantCoeffSDEeq} if the origin is ASiP \citep{HGGS2018localLya}.
 
 \begin{theorem}(The Converse Theorem)\label{ThmConverseTheorem}
 Assume the origin of system \eqref{autonomousConstantCoeffSDEeq} is ASiP. Then for all small enough $p > 0$ there exist constants $c_1,c_2,c_3,c_4,c_5 > 0$ and a function $V\in C(\mathcal{U})\cap C^2(\mathcal{U}\setminus \{\0\})$ such that
@@ -537,10 +538,10 @@ Assume the origin of system \eqref{autonomousConstantCoeffSDEeq} is ASiP. Then f
 \end{enumerate}
 \end{theorem}
 
-From theorems \ref{ThmExistsConstantsThenPES} and \ref{ThmConverseTheorem} we get the following corollary
+From Theorems \ref{ThmExistsConstantsThenPES} and \ref{ThmConverseTheorem} we get the following corollary
 
 \begin{corollary}
-Consider the system \eqref{autonomousConstantCoeffSDEeq}. The origin is GASiP if and only if there exist constants $p, c_1,c_2,c_3 > 0$ and a function $V\in C(\mathcal{U})\cap C^2(\mathcal{U}\setminus \{\0\})$ fulfilling the conditions $i)$ and $ii)$ in Theorem \ref{ThmExistsConstantsThenPES}.
+Consider the system \eqref{autonomousConstantCoeffSDEeq}. The origin is GASiP if and only if there exist constants $p, c_1,c_2,c_3 > 0$ and a function $V\in C(\mathcal{U})\cap C^2(\mathcal{U}\setminus \{\0\})$ fulfilling conditions $i)$ and $ii)$ in Theorem \ref{ThmExistsConstantsThenPES}.
 \end{corollary}
 
 
@@ -563,7 +564,7 @@ For ordinary autonomous linear differential equations, it is common to seek a qu
 where $Q \succ 0$ and $p > 0$. The next theorem shows why a function of this form is suitable.
 
 \begin{theorem}\label{ThmLyaGasip}
-Let $Q\in \R{n\times n}$ be a symmetric positive definite matrix. The origin of the system \eqref{StoDiff} is  GASiP if and only if there exist constants $c_i > 0$, $i = 1,\ldots, 5$, and a function $V \in C(\R{n}) \cap C^2(\R{n} \setminus \{0\})$ such that
+Let $Q\in \R{n\times n}$ be a symmetric positive definite matrix. The origin of the system \eqref{StoDiff} is GASiP if and only if there exist constants $c_i > 0$, $i = 1,\ldots, 5$, and a function $V \in C(\R{n}) \cap C^2(\R{n} \setminus \{0\})$ such that
 \begin{enumerate}[i)]
     \item $c_1 \pnorm{\x} \leq V(\x) \leq c_2 \pnorm{\x}$ for all $\x \in \R{n}$.
     \item $LV(\x) \leq -c_3\pnorm{\x}$ for all $\x \in \R{n} \setminus \{\0\}$.
@@ -571,20 +572,20 @@ Let $Q\in \R{n\times n}$ be a symmetric positive definite matrix. The origin of 
     \item $\left\lvert \frac{\partial V}{\partial x_r}(\x)\right\rvert \leq c_4 \nnorm{\x}{Q}{p-1}$ for all $\x \in \R{n} \setminus \{\0\}$, $1 \leq r \leq n$.
     \item $\left\lvert \frac{\partial ^2 V}{\partial x_r \partial x_s}(\x) \right\rvert \leq c_5 \nnorm{\x}{Q}{p-2}$ for all $\x \in \R{n} \setminus \{\0\}$, $1 \leq r,s \leq n$.
 \end{enumerate}
-for all $p > 0$ sufficiently small. 
+for all $p > 0$ sufficiently small.
 \end{theorem}
 \begin{proof}
-Follows from \ref{ThmExistsConstantsThenPES} and \ref{ThmConverseTheorem} where $\norm{\x}^p$ can be substituted with $\pnorm{\x}$ since for all $\x \in \R{n}$ we have
+Follows from Theorems \ref{ThmExistsConstantsThenPES} and \ref{ThmConverseTheorem} where $\norm{\x}^p$ can be substituted with $\pnorm{\x}$ since for all $\x \in \R{n}$ we have
 \begin{align*}
     \lambdamin^\frac{p}{2}\norm{\x}^p \leq \pnorm{\x} \leq \lambdamax^\frac{p}{2}\norm{\x}^p
 \end{align*}
 by Theorem \ref{Thm pnmorm norm relation}.
 \end{proof}
 
-We will show that our choice of Lyapunov function form fulfills conditions $i)$, $iii)$ - $v)$ of Theorem \ref{ThmLyaGasip} quite trivially and independently of $Q$. However, determining $Q \succ 0$ such that $V$ fulfills condition $ii)$ requires more work. Condition $ii)$ is the condition which we will show can be formulated as a BMI feasibility problem.
+We will show that our choice of Lyapunov function form \eqref{LyaForm} fulfills conditions $i)$, $iii)$ - $v)$ of Theorem \ref{ThmLyaGasip} quite trivially and independently of $Q$. However, determining $Q \succ 0$ such that $V$ fulfills condition $ii)$ requires more work. Condition $ii)$ is the condition which we will show can be formulated as a BMI feasibility problem.
 
 \begin{theorem}
-The function $V(\x) = \pnorm{\x}$, $Q\succ 0, p > 0$, fulfills conditions i), iii)-v) of Theorem \ref{ThmLyaGasip}
+The function $V(\x) = \pnorm{\x}$, $Q\succ 0, p > 0$, fulfills conditions i), iii)-v) of Theorem \ref{ThmLyaGasip}.
 \end{theorem}
 \begin{proof}
 Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$, respectively.
@@ -604,11 +605,11 @@ Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$,
             \frac{\partial V}{\partial x_r} (\x) &= \frac{p}{2}\nnorm{\x}{Q}{p - 2} \left(\sum_{i = 1}^n x_i Q_{r, i} + \sum_{i = 1}^n x_i Q_{i, r}\right)\\
             &= p\nnorm{\x}{Q}{p - 2} \sum_{i = 1}^n x_i Q_{r,i}\\
         \end{align*}
-        Using the fact that
+        by symmetry of $Q$. By Cauchy-Schwarz we have
         \begin{align*}
             \left\lvert \sum_{i = 1}^n x_i Q_{r,i} \right\rvert \leq \sqrt{\sums{i}{n}x_i^2}\sqrt{\sums{i}{n} Q_{r,i}^2} = c\norm{\x}, \quad c \coloneqq \sqrt{\sums{i}{n} Q_{r,i}^2}
         \end{align*}
-        and Theorem \ref{Thm pnmorm norm relation} we get
+        and combined with Theorem \ref{Thm pnmorm norm relation} we get
         \begin{align*}
             \left | \frac{\partial V}{\partial x_r}(\x) \right | &\leq p\lambdamax^{\frac{p}{2} - 1} \norm{\x}^{p - 2}c\norm{\x}\\
             &= pc\lambdamax^{\frac{p}{2}-1}\norm{\x}^{p-1}\\
@@ -618,7 +619,8 @@ Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$,
         where $c_4 \coloneqq pc\lambdamax^{\frac{p}{2}-1}\lambdamin^{-\frac{p -1}{2}} > 0$, as desired.
     \item We get
     \begin{align*}
-        \frac{\partial V}{\partial x_r \partial x_s}(\x) &= p\left(\frac{p - 2}{2}\right)\left (\sum_{i = 1}^n\sum_{j = 1}^n x_ix_j \Q{i,j} \right)^{\frac{p}{2} - 2} \left(2 \sum_{i = 1}^n x_i \Q{s,i}\right)\sum_{i = 1}^n x_i \Q{i,r} + p\nnorm{\x}{Q}{p-2}\\
+        \frac{\partial V}{\partial x_r \partial x_s}(\x) &= p\left(\frac{p - 2}{2}\right)\left (\sum_{i = 1}^n\sum_{j = 1}^n x_ix_j \Q{i,j} \right)^{\frac{p}{2} - 2} \left(2 \sum_{i = 1}^n x_i \Q{s,i}\right)\sum_{i = 1}^n x_i \Q{i,r}\\
+        &\quad + p\nnorm{\x}{Q}{p-2}Q_{s,r}\\
         &= p\nnorm{\x}{Q}{p-4}\left( (p-2)\sums{i}{n}\sums{j}{n} x_i x_j \Q{s,i}\Q{r,j} + \nnorm{\x}{Q}{2}\Q{s,r}\right).
     \end{align*}
     Now, Theorem \ref{Thm pnmorm norm relation} and $|x_i| \leq \norm{\x}$ gives us
@@ -642,7 +644,7 @@ Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$,
     \end{align*}
     holds for all $r,s \in \{1,\ldots, n\}$.
     
-    Note that the constant in the proof in \citep{Ha2019BMI} does not necessarily hold for all $1\leq r,s \leq n$ since the maximum is not taken, as is done here.
+    Note that there is a mistake in \citep{Ha2019BMI}. The constant in their proof does not necessarily hold for all $1\leq r,s \leq n$ since the maximum is not taken, as is done here.
 \end{enumerate}
 \end{proof}
 
@@ -666,7 +668,6 @@ where
 \end{lemma}
 For a proof see \citep[Lemma 12]{HGGS2018localLya}.
 
-Note that $H(\x)$ is a homogeneous polynomial of order 4. This is a property that we will make use of later.
 \begin{lemma}\label{LemmaH(x)Homogeneous}
 The polynomial $H(\x)$ is a homogeneous polynomial of order 4, i.e. $H(k\x) = k^4H(\x)$, $k\in\R{}$.
 \end{lemma}
@@ -705,7 +706,13 @@ with
 
 We have transformed condition $ii)$ into a more manageable form. Since $ii)$ is a sufficient condition for any $c_3 > 0$ we also have that $H(\x) \geq c\nnorm{\x}{}{4}$ is sufficient for any $c > 0$. Now, if we can determine, or guarantee the existence of, $Q \succ 0$ and $c > 0$ such that $H(\x) \geq c\nnorm{\x}{}{4}$ holds for all $\x \in \R{n}\setminus \{\0\}$, then $V(\x) = \nnorm{\x}{Q}{p}$ is a Lyapunov function for the system \eqref{StoDiff} and the origin of the system is GASiP, by Theorem \ref{ThmLyaGasip}.
 
-Before we go on to describe the general method of finding $Q$ and $c$ by constructing a BMI and solving it we will discuss some special cases which do not require the BMI method to determine if the origin of system is GASiP.
+The case $p = 2$ is a common theme in the literature in the study of stability of linear SDEs. This leads to the simplification of the polynomial \eqref{H(x) definition} to
+\begin{align*}
+    H(\x) = -\x^T (F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u) \x\nnorm{\x}{Q}{2}
+\end{align*}
+and results in a more manageable analysis of the inequality $H(\x) \geq c\nnorm{\x}{}{4}$. The second term of \eqref{H(x) definition} is quadratic in the entries of $Q$. This non-linearity of \eqref{H(x) definition} vanishes when $p = 2$ and the determination of $Q \succ 0$ such that the inequality holds becomes analytically feasible. However, this assumption is very restrictive when studying stability of stochastic systems. See Chapter \ref{Kafli 3 dimensional system} for further discussion.
+
+Before we go on to describe the general method of finding $Q$ and $c$ by constructing a BMI and solving it we will discuss some special cases which can be studied analytically and, therefore, do not require the BMI method to determine if the origin of system is GASiP.
 
 \section{Analytic Examples}\label{SectionAnalyticExamples}
 In the following sections we will first consider a single dimensional system and then consider a system of a specific form. In both cases, the conditions a system needs to fulfill such that \eqref{H(x)Ineq3} holds and $V(\x) = \pnorm{\x}$ is a Lyapunov function are quite simple.
@@ -727,13 +734,13 @@ where $Q\in \R{}$, $Q > 0$ and $p > 0$. Inequality \eqref{H(x)Ineq3} becomes
 Then, by using formula \eqref{H(x) definition} for $H(x)$ we get
 \begin{align*}
     H(x) &= -x\left(a^T Q + Qa + \sum_{u = 1}^U \sigma_u^T Q \sigma_u \right)x \nnorm{x}{Q}{2} + \frac{2 - p}{4} \sum_{u = 1}^U \left(x^T (Q\sigma_u + \sigma_u^T Q) x\right)^2\\
-    &= -x^4\left(2a Q + Q\sum_{u = 1}^U \sigma_u^2\right)Q + \frac{2 - p}{4} \sum_{u = 1}^U\left(2x^2\sigma_u^2 Q\right)^2\\
+    &= -x^4\left(2a Q + Q\sum_{u = 1}^U \sigma_u^2\right)Q + \frac{2 - p}{4} \sum_{u = 1}^U\left(2x^2\sigma_u Q\right)^2\\
     &= -\left(2a + S\right) Q^2x^4 + (2 - p)SQ^2x^4\\
     &= ((2-p)S - (2a + S))Q^2 x^4\\
     &= (2S - pS - 2a - S) Q^2 x^4\\
     &= (S - pS - 2a)Q^2 x^4
 \end{align*}
-where $S \coloneqq \sum\limits_{u = 1}^U \sigma_u^2$. Now, there exists $c > 0$ such that $H(x) \geq cx^4$ for all $x \in \R{}\setminus \{0\}$ if and only if $S - pS - 2a > 0$, i.e.,
+where $S \coloneqq \sum\limits_{u = 1}^U \sigma_u^2$. Now, there exists $c > 0$ such that $H(x) \geq cx^4$ for all $x \in \R{}\setminus \{0\}$ if and only if $S - pS - 2a > 0$, i.e.
 \begin{align*}
     p < 1 - \frac{2a}{S}.
 \end{align*}
@@ -833,7 +840,7 @@ Let $F\in\R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetri
 \begin{align*}
     d\X(t) = F\X(t)dt + G\X(t)dW(t).
 \end{align*}
-is GASiP if and only if
+is GASiP if
 \begin{align*}
 2a < \sigma^2.
 \end{align*}
@@ -846,7 +853,7 @@ Let $F\in \R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetr
 \begin{align*}
     d\X(t) = F\X(t)dt + G\X(t)dW(t).
 \end{align*}
-is GASiP if and only if
+is GASiP if
 \begin{align*}
     2a < S
 \end{align*}
@@ -878,7 +885,7 @@ Let $F \in \R{n\times n}$ be of the form $F = A + \diag(\av)$ where $A$ is an an
 \begin{align*}
     d\X(t) = F\X(t)dt + \sum_{u=1}^U G^u\X(t)dW_u(t).
 \end{align*}
-is GASiP if and only if
+is GASiP if
 \begin{align*}
     2a' < S
 \end{align*}
@@ -892,10 +899,10 @@ In the beginning of this chapter we showed that condition $ii)$ of Theorem \ref{
 \begin{align*}
     H(\x) \geq c\norm{\x}^4
 \end{align*}
-for any $c > 0$.
+for any $c > 0$, where $H(\x)$ is dependent on $Q$.
 In this chapter we set out to show how inequality \eqref{H(x)Ineq3} can be used to construct a BMI whose solution determines that $V(\x) = \pnorm{\x}$ is a Lyapunov function of the system \eqref{StoDiff}. Our BMI will be an inequality of the form
 \begin{align*}
-    M = \sum_{i = 1}^n \sum_{j = 1}^n q_iq_j A_{ij} + \sum_{i = 1}^n q_i B_i + C \succ 0
+    M = \sum_{i = 1}^n \sum_{j = 1}^n q_iq_j A_{ij} + \sum_{i = 1}^n q_i B_i + C \succeq 0
 \end{align*}
 where $q_i \in \R{}$ and $A_{ij}, B_i, C \in \R{m \times m}$ are symmetric matrices, $i,j = 1, \ldots, n$. The entries of M are second order polynomials in $q_i$, $i = 1, \ldots, n$.
 
@@ -911,7 +918,7 @@ We want to find a symmetric positive definite matrix $Q\in \R{n\times n}$, symme
 \begin{align}\label{P_Z definition}
     P_\z \coloneqq \z^T P \z = P_c(\x)
 \end{align}
-where $\z$ is a vector whose elements are all the combinations of second order terms using the elements of $\x$. I.e. it contains the elements $\x^{\balpha}$ where $\balpha$ is a multi-index with $|\balpha| = 2$, a total of $m = \frac{n(n + 1)}{2}$ elements. For example, if $n = 2$ then $\z = (x_1^2, x_1x_2, x_2^2)$ and if $n = 3$ then $\z = (x_1^2, x_1x_2, x_1x_3, x_2^2, x_2x_3, x_3^2)$.
+where $\z$ is a vector whose elements are all the combinations of second order terms using the elements of $\x$. That is, it contains the elements $\x^{\balpha}$ where $\balpha$ is a multi-index with $|\balpha| = 2$, a total of $m = \frac{n(n + 1)}{2}$ elements. For example, if $n = 2$ then $\z = (x_1^2, x_1x_2, x_2^2)$ and if $n = 3$ then $\z = (x_1^2, x_1x_2, x_1x_3, x_2^2, x_2x_3, x_3^2)$.
 
 The maximum number of unique elements in the matrices $Q$ and $P$ are $m$ and $k \coloneqq m(m + 1) / 2$, respectively.
 Therefore, we want to determine the values $c, Q_1, \ldots, Q_m,$ $P_1, \ldots, P_k$ such that
@@ -922,7 +929,7 @@ Therefore, we want to determine the values $c, Q_1, \ldots, Q_m,$ $P_1, \ldots, 
     &P
     \succeq 0.
 \end{align*}
-and $P_c = P_\z$, where $Q_1, \ldots, Q_m$ and $P_1, \ldots, P_k$ are the upper triangular elements of $Q$ and $P$, respectively. The next theorem states that if $P \succeq 0$ then the polynomial $P_\z$ is a sum-of-squared polynomials. Note that $P_\z = \z^T P \z$ is a fourth order polynomial in $x_1, \ldots, x_n$ and we write $P_\z(\x)$ for $\z^T P \z$ when we substitute the value $\x \in \R{n}$ for the variables $x_1, \ldots, x_n$ in $\z^T P \z$.
+and $P_c = P_\z$, where $Q_1, \ldots, Q_m$ and $P_1, \ldots, P_k$ are the upper triangular elements of $Q$ and $P$, respectively. The next theorem states that if $P \succeq 0$ then the polynomial $P_\z$ is a sum-of-squares polynomial. Note that $P_\z = \z^T P \z$ is a fourth order polynomial in $x_1, \ldots, x_n$ and we write $P_\z(\x)$ for $\z^T P \z$ when we substitute the value $\x \in \R{n}$ for the variables $x_1, \ldots, x_n$ in $\z^T P \z$.
 \begin{theorem}
 If $P \succeq 0$ then the polynomial $P_\z = \z^T P \z$ is a sum of squared polynomials. Thus \begin{align*}
     P_\z(\x) \geq 0, \quad \forall \x \in \R{n}.
@@ -961,7 +968,7 @@ where each of $\innf{\z}{\bb_i} \coloneqq \sum\limits_{j = 1}^m b_{ji}z_j$, $1 \
 
 To determine the values of $c$, $Q$ and $P$ such that $P_c(\x) = P_\z$ we need to find relationships between the coefficients of $P_c$ and $P_\z$. Notice that $P_c(\x) = H(\x) - c\norm{\x}^4$ is a homogeneous polynomial of order $4$ since $H(\x)$ is a homogeneous polynomial of order $4$, by Theorem \ref{LemmaH(x)Homogeneous}. Also, the polynomial $P_\z$ only contains terms of order $4$. It is a sum of squared polynomials where the terms of the squared polynomials are the elements of $\z$. So, to get the relations between the coefficients of the two polynomials we can equate all fourth order partial derivatives of the polynomials with respect to $\x$.
 
-Let's define the set $M_n$ as the set of all $n$-dimensional multi-indices of length 4, i.e. $M_n \coloneqq \{\balpha \in \R{n} \mid |\balpha| = 4\}$ and let $\alpha^n(i)$ be the $i$-th element of $M_n$ in reverse lexicographical order. For example
+Let's define the set $M_n$ as the set of all $n$-dimensional multi-indices of length 4, i.e.\@ $M_n \coloneqq \{\balpha \in \R{n} \mid |\balpha| = 4\}$ and let $\alpha^n(i)$ be the $i$-th element of $M_n$ in reverse lexicographical order. For example
 \begin{align*}
     \alpha^2(1) &= (4, 0)\\
     \alpha^2(2) &= (3, 1)\\
@@ -983,7 +990,7 @@ The cardinality of the set $M_n$ is
     |M_n| = n + n(n - 1) + \frac{n(n - 1)}{2} + \frac{n(n - 1)(n - 2)}{2} + \binom{n}{4}\mathbf{1}_{n\geq 4}
 \end{align*}
 \end{theorem}
-The proof is obtained with elementary combinatorics, where each term in the formula corresponds to the number of elements in a type. I.e. type 1 has $n$ elements, type 2 has $n(n - 1)$ elements, etc.
+The proof is obtained with elementary combinatorics, where each term in the formula corresponds to the number of elements in a type. That is, type 1 has $n$ elements, type 2 has $n(n - 1)$ elements, etc.
 
 Let's do a little recap. We want to determine the values of $c$, $Q$ and $P$ such that $c > 0$, $Q \succ 0$, $P \succeq 0$ and $P_c(\x) = P_\z$. To achieve the equality $P_c = P_\z$ we have to form a relationship between the coefficients of the terms of the polynomials. That relationship is formed by equating all the fourth order partial derivatives of $P_c$ and $P_\z$ in terms of $\x$. Namely,
 \begin{align}\label{RelationsGeneralCase}
@@ -1013,7 +1020,7 @@ and we want to determine the values $c, Q_1, Q_2,Q_3, P_1, P_2, P_3, P_4, P_5, P
 \end{align*}
 and $P_c(x ,y) = P_\z$. We equate the fourth order derivatives of the polynomials $P_c$ and $P_\z$
 \begin{align}\label{RelationsSpecialCase}
-    &D_{\alpha^2(1)} P_\z = D_{\alpha^2(1)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^4} = \frac{\partial P_c}{\partial x^4} \nonumber\\
+    &D_{\alpha^2(1)} P_\z = D_{\alpha^2(1)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^4} = \frac{\partial^4 P_c}{\partial x^4} \nonumber\\
     &D_{\alpha^2(2)} P_\z = D_{\alpha^2(2)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^3 \partial y} = \frac{\partial^4 P_c}{\partial x^3 \partial y}\nonumber\\
     &D_{\alpha^2(3)} P_\z = D_{\alpha^2(3)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^2 \partial y^2} = \frac{\partial^4 P_c}{\partial x^2 \partial y^2}\\
     &D_{\alpha^2(4)} P_\z = D_{\alpha^2(4)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x \partial y^3} = \frac{\partial^4 P_c}{\partial x \partial y^3}\nonumber\\
@@ -1103,19 +1110,19 @@ Let us denote $\z = (z_1, \ldots, z_m)$ where $z_i$ is of the form $z_i = x_kx_j
 \end{align*}
 Now we go through each of the possible index types of $\alpha^n$ and note the results of applying the differentiation mapping to $P_\z$.
 \begin{enumerate}[1:]
-    \item $[4]$. To get the term $x_r^4$ we must have $\z$ terms of the form $z_i = x_r^2$ and $z_j = x_r^2$. But since the terms in $\z$ are unique then we must have that $i = j$. The coefficient of $z_iz_i = x_r^4$ is $P_{ii}$ so applying $D_{\alpha^n}$ to $P_\z$ we get $P_{ii}$, i.e. no dependent variables.
+    \item $[4]$. To get the term $x_r^4$ we must have $\z$ terms of the form $z_i = x_r^2$ and $z_j = x_r^2$. But since the terms in $\z$ are unique then we must have that $i = j$. The coefficient of $z_iz_i = x_r^4$ is $P_{ii}$ so applying $D_{\alpha^n}$ to $P_\z$ we get $P_{ii}$, i.e.\@ no dependent variables.
     \item $[3,1]$. To get a term of the form $x_r^3x_s$ we must have $(z_i, z_j) = (x_r^2, x_rx_s)$ or $(z_i, z_j) = (x_rx_s, x_r^2)$, $r \neq s$. The coefficients of $z_iz_j$ and $z_jz_i$ are $P_{ij}$ and $P_{ji}$, respectively, and applying $D_{\alpha^n}$ to $P_\z$ gives us $2P_{ij}$ due to the symmetry of $P$. Hence, we get no dependent variables.
     \item $[2,2]$. Let $r \neq s$. Here, $(z_i,z_j)$ must be of one of the following forms:
         \begin{align*}
             &(x_r^2, x_s^2)\\
             &(x_s^2, x_r^2)\\
-            &(x_rx_s, x_rx_s)
+            &(x_rx_s, x_rx_s).
         \end{align*}
     Applying $D_{\alpha^n}$ gives us relations of the form $P_{ij} + P_{ji} + P_{kk}$, i.e. $2P_{ij} + P_{kk}$. So we get two dependent variables in the relation.
     \item $[2, 1, 1]$. Let $r \neq s \neq t$. To get a term of the form $x_r^2 x_s x_t$ then $(z_i, z_j)$ must be one of the following
     \begin{align*}
         &(x_r^2, x_sx_t) \text{ or } (x_sx_t, x_r^2)\\
-        &(x_rx_s, x_rx_t) \text{ or } (x_rx_t, x_rx_s)
+        &(x_rx_s, x_rx_t) \text{ or } (x_rx_t, x_rx_s).
     \end{align*}
     Applying $D_{\alpha^n}$ gives us the relations $2P_{ij} + 2P_{kl}$ so we get two dependent variables.
     \item $[1,1,1,1]$. Let $r \neq s \neq t \neq u$. Then, $(z_i, z_j)$ must be of the following forms to get the term $x_r x_s x_t x_u$
@@ -1155,7 +1162,7 @@ where
     &= n + \frac{n(n+1)}{2} + 2\left(\frac{n(n-1)}{2}+ \frac{n(n-1)(n-2)}{2} + \mathbf{1}_{n\geq4}\binom{n}{4}\right) + 1\\
     &= \frac{1}{2}(2n^3 - 2n^2 + 5n + 2) + 2\binom{n}{4}\mathbf{1}_{n\geq4}\\
     K &\coloneqq \frac{n(n+1)}{2} + n(n-1) + n(n-1)(n-2) + 3\binom{n}{4}\mathbf{1}_{n\geq 4} + 1\\
-    &= \frac{1}{2}(2n^3 - 3n^2 + 3n + 2) + 3\binom{n}{4}\mathbf{1}_{n\geq4}
+    &= \frac{1}{2}(2n^3 - 3n^2 + 3n + 2) + 3\binom{n}{4}\mathbf{1}_{n\geq4}.
 \end{align*}
 
 The dimension of the matrix $M$ is $N\times N$. It is determined by the dimensions of $Q$ and $P$ and the number of dependent relations, as explained in detail below. In the formula for $N$, the term $n$ corresponds to the dimension of the SDE (the size of the problem and thus the dimension of $Q$), the term $m = \frac{n(n + 1)}{2}$ is the dimension of $P$ and the 1 accounts for the variable $c$.
@@ -1164,36 +1171,36 @@ In the following section we will refer to the variables $q_1, \ldots q_K$ of the
 
 The number of $q$-variables, $K$, in the BMI is determined by the number of unique variables in $Q$ and the number of variables in the dependent relations.
 
-Now, we assign the variables $q_1, q_2, \ldots, q_K$ of the BMI to the original variables, i.e., $c$ and the elements of $Q$ and $P$. First, we let
+Now, we assign the variables $q_1, q_2, \ldots, q_K$ of the BMI to the original variables, i.e. $c$ and the elements of $Q$ and $P$. First, we let
 \begin{align*}
     q_1 &= Q_1,\\
     &\vdots\\
     q_m &= Q_m,\\
     q_K &= c
 \end{align*}
-i.e. the first $m$ $q$-variables are set to the elements of $Q$ and the last one is set to $c$. Notice that some elements of $P$ can be written solely in terms of the elements of $Q$ and $c$. In the case when $n = 2$ we have $N = 8$ and $K = 6$, and we can see from the relations on page \pageref{RelationsWrittenOut n2} that the variables $P_1, P_2, P_5$ and $P_6$ can be written in terms of
+i.e.\@ the first $m$ $q$-variables are set to the elements of $Q$ and the last one is set to $c$. Notice that some elements of $P$ can be written solely in terms of the elements of $Q$ and $c$. In the case when $n = 2$ we have $N = 8$ and $K = 6$, and we can see from the relations on page \pageref{RelationsWrittenOut n2} that the variables $P_1, P_2, P_5$ and $P_6$ can be written in terms of
 \begin{align*}
     q_1 &= Q_1,\\
     q_2 &= Q_2,\\
     q_3 &= Q_3,\\
     q_6 &= c.
 \end{align*}
-Therefore, we don't need to assign $q$-variables to those $P$-variables. The rest of the $K - m - 1$ $q$-variables are assigned to the elements of $P$ that are dependent in the relations \eqref{RelationsGeneralCase}. So when $n = 2$ we have $6 - 3 - 1 = 2$ remaining variables that will be set to the two dependent variables, i.e.,
+Therefore, we don't need to assign $q$-variables to those $P$-variables. The rest of the $K - m - 1$ $q$-variables are assigned to the elements of $P$ that are dependent in the relations \eqref{RelationsGeneralCase}. So when $n = 2$ we have $6 - 3 - 1 = 2$ remaining variables that will be set to the two dependent variables, i.e.
 \begin{align*}
     &q_4 = P_3,\\
     &q_5 = P_4.
 \end{align*}
 
-Now, let's go through how we implement the constraints $Q\succ 0$, $P \succeq 0$ and $c > 0$ into the $N\times N$ matrix $M$. First, the constraint $P \succeq 0$ is implemented in the principal submatrix $M_{1:m, 1:m}$. Since the BMI problem \eqref{BMIgeneralNotDefinition} is formulated in terms of semi-definiteness instead of definiteness, we need to write the constraint $Q \succ 0$ as $Q - \varepsilon I \succeq 0$ for some $\varepsilon > 0$. The same applies for the constraint $c > 0$, i.e. we must write the constraint as $c - \varepsilon \geq 0$. Let
+Now, let's go through how we implement the constraints $Q\succ 0$, $P \succeq 0$ and $c > 0$ into the $N\times N$ matrix $M$. First, the constraint $P \succeq 0$ is implemented in the principal submatrix $M_{1:m, 1:m}$. Since the BMI problem \eqref{BMIgeneralNotDefinition} is formulated in terms of semi-definiteness instead of definiteness, we need to write the constraint $Q \succ 0$ as $Q - \varepsilon I \succeq 0$ for some $\varepsilon > 0$. The same applies for the constraint $c > 0$, i.e.\@ we must write the constraint as $c - \varepsilon \geq 0$. Let
 \begin{align*}
     t &\coloneqq N - n\\
     &= \frac{n(n+1)}{2} + 2\beta + 1\\
-    &= \frac{1}{2}n(2n^2 - 3n + 3) + 2\binom{n}{4}\mathbf{1}_{n\geq 4} + 1
+    &= \frac{1}{2}n(2n^2 - 3n + 3) + 2\binom{n}{4}\mathbf{1}_{n\geq 4} + 1.
 \end{align*}
 
-Then the constraint $Q - \varepsilon I\succeq 0$ is implemented in the principal submatrix \textsc{$M_{t:(N-1), t:(N-1)}$} and $c - \varepsilon > 0$ is implemented in the principal submatrix $M_{N,N}$.The rest of the diagonal of the matrix $M$ is reserved for the implementation of the relations where we have dependent $P$-variables. All other elements of $M$ are set to zero.
+Then the constraint $Q - \varepsilon I\succeq 0$ is implemented in the principal submatrix $M_{t:(N-1), t:(N-1)}$ and $c - \varepsilon > 0$ is implemented in the principal submatrix $M_{N,N}$.The rest of the diagonal of the matrix $M$ is reserved for the implementation of the relations where we have dependent $P$-variables. All other elements of $M$ are set to zero.
 
-Let us denote $f$ as the left hand side of a dependent relation and $g$ the right hand side. We want to force the equality $f = g$ in the BMI. Since we have inequality in the BMI instead of equality we implement $f - g \geq 0$ and $g - f \geq 0$ in two principal submatrices $M_{i,i}$ and $M_{i+1,i+1}$. So, for each dependent relation we need two elements on the diagonal to implements its constraint. By Corollary \ref{CorNumberOfDependentRelations}, the number of diagonal elements needed is $2\beta$.
+Let us denote $\mu$ as the left hand side of a dependent relation and $\varphi$ the right hand side. We want to force the equality $\mu = \varphi$ in the BMI. Since we have inequality in the BMI instead of equality we implement $\mu - \varphi \geq 0$ and $\varphi - \mu \geq 0$ in two principal submatrices $M_{i,i}$ and $M_{i+1,i+1}$. So, for each dependent relation we need two elements on the diagonal to implements its constraint. By Corollary \ref{CorNumberOfDependentRelations}, the number of diagonal elements needed is $2\beta$.
 
 Note that the placement of the constraints in $M$ does not matter. This order was chosen since this was the order used in the original paper \citep{Ha2019BMI} and in the Matlab program. Visually, the constraints are implemented as follows
 
@@ -1201,22 +1208,18 @@ Note that the placement of the constraints in $M$ does not matter. This order wa
 \footnotesize{
     \begin{pmatrix}
     P \succeq 0 & & & & & & &\\
-      & f_1 - g_1 \geq 0 & & & & & &\\
-      & & g_1 - f_1 \geq 0 & & & & &\\
+      & \mu_1 - \varphi_1 \geq 0 & & & & & &\\
+      & & \varphi_1 - \mu_1 \geq 0 & & & & &\\
       & & & \ddots & & & &\\
-      & & & & f_\beta - g_\beta \geq 0 & & &\\
-      & & & & & g_\beta - f_\beta \geq 0 & &\\
+      & & & & \mu_\beta - \varphi_\beta \geq 0 & & &\\
+      & & & & & \varphi_\beta - \mu_\beta \geq 0 & &\\
       & & & & & & Q - \varepsilon I \succeq 0 &\\
       & & & & & & & c - \varepsilon \geq 0
     \end{pmatrix}.
     }
 \end{align*}
 
-Recall our BMI \eqref{BMIgeneralNotDefinition}
-\begin{align*}
-    M \coloneqq \sum\limits_{i = 1}^m \sum\limits_{j = i}^m q_iq_j A_{ij} + \sum\limits_{i = 1}^K q_iB_i + C \succeq 0.
-\end{align*}
-Now, lets go through the construction of the matrices $A_{ij}$, $B_i$ and $C$. We will describe the process generally and then we will go through the case when $n = 2$.
+Recall our BMI \eqref{BMIgeneralNotDefinition}. Now, lets go through the construction of the matrices $A_{ij}$, $B_i$ and $C$. We will describe the process generally and then we will go through the case when $n = 2$.
 
 First, we have a definition.
 \begin{definition}
@@ -1237,7 +1240,7 @@ The matrix $A_{ij}$ corresponds to the variables $q_iq_j$ so we want the element
 \end{align*}
 then we take the coefficient of $Q_iQ_j$, which is $\rho_{ij}$, and multiply it with the matrix $\E{kl}$, since the constraint of $P \succeq 0$ is implemented in $M_{1:m, 1:m}$. However, if the relation is of the form
 \begin{align*}
-    P_{kl} + P_{rs} = \sum_{i = 1}^n\sum_{j = i}^n \rho_{ij}Q_iQ_j + \eta c, \quad k,l,r,s = 1, \ldots, m, \, k \leq l, r\leq s.
+    P_{kl} + P_{rs} = \sum_{i = 1}^n\sum_{j = i}^n \rho_{ij}Q_iQ_j + \eta c, \quad k,l,r,s = 1, \ldots, m, \, k \leq l, r\leq s
 \end{align*}
 then the coefficient $\rho_{ij}$ of $Q_i Q_j$ is multiplied by $\E {aa} - \E {(a+1)(a+1)}$, where $(a,a)$ and $(a+1,a+1)$, $m < a < \beta$, are the positions where the relations with dependent variables are implemented.
 
@@ -1247,10 +1250,12 @@ Next we go through the construction of the $B$ matrices. The first $m$ matrices 
 
 Lastly, the $C$ matrix is used to implement $-\varepsilon I$ and $-\varepsilon$ to the constraints $Q - \varepsilon I \succeq 0$ and $c - \varepsilon \geq 0$, respectively, i.e.
 \begin{align*}
-    C = -\varepsilon\left(\sum_{i = t}^K \E{ii}\right)
+    C = -\varepsilon\left(\sum_{i = t}^K \E{ii}\right).
 \end{align*}
-\\
-To understand this construction more clearly we will go through the process in the case when $n = 2$ and $U = 1$, i.e. a two dimensional system with one $G$ matrix, just as we did in the relations \eqref{RelationsWrittenOut n2}. Again, to reduce visual clutter we will denote
+
+To understand this construction more clearly we will go through the process in the case when $n = 2$ and $U = 1$, i.e.\@ a two dimensional system with one $G$ matrix, just as we did in the relations \eqref{RelationsWrittenOut n2}. For further explanation and to see the construction of a particular two dimensional system we refer to \citep{Ha2019BMI}.
+
+Again, to reduce visual clutter we will denote
 \begin{align*}
     F = \begin{bmatrix}
     f_1 & f_2\\
@@ -1287,11 +1292,11 @@ Lets start with $A_{11}$. We begin by finding all the coefficients of $q_1q_1 = 
 \end{align*}
 Note that the constraint $P \succeq 0$ is implemented in the principal submatrix $M_{1:3,1:3}$ so the variable $P_1$ is situated in position $(1,1)$. Thus, the coefficient $-2f_1 - (p - 2)g_1^2 - g_1^2$ is multiplied by the matrix $\E{11}$. Likewise, $P_2$ is in position $(1,2)$ so the coefficient is multiplied by $\E{12}$. Therefore, $A_{11}$ is defined as
 \begin{align*}
-    A_{11} &= \big[-2a - (p - 2)r^2 - r^2\big]\E{11}\\
-    \quad& + \big[-b - (p - 2)rs - rs\big]\E{12}\\
-    \quad& + \big[g_2^2(2 - p) - g_2^2\big](\E{44} - \E{55})
+    A_{11} &= \big[-2f_1 - (p - 2)g_1^2 - g_1^2\big]\E{11}\\
+    \quad& + \big[-f_2 - g_1g_2 - g_1g_2(p - 2)\big]\E{12}\\
+    \quad& + \big[g_2^2(2 - p) - g_2^2\big](\E{44} - \E{55}).
 \end{align*}
-This is done for each $q_iq_j$ and $A_{ij}$, $i,j = 1,\ldots,3$, $i \leq j$.
+This is done for each $q_iq_j$ and $A_{ij}$, $i,j = 1,2,3$, $i \leq j$.
 
 Now, let's go through the construction of the $B$ matrices. Note that $Q$ is implemented in the principal submatrix $M_{6:7, 6:7}$. The variable $q_1$ corresponds to the matrix $B_1$ and element $Q_1$ in $Q$. Thus, we set
 \begin{align*}
@@ -1302,7 +1307,7 @@ The same is done for each element in the upper triangle matrix of $Q$ and we get
     &q_2: \quad B_2 = \E{67}\\
     &q_3: \quad B_3 = \E{77}.
 \end{align*}
-The relations with the dependent $P$ variables, $P_3$ and $P_4$, are implemented in principal submatrices $M_{4,4}$ and $M_{5,5}$ as $f - g \geq 0$ and $g - f \geq 0$ where $f$ is the left hand side of the relation and $g$ is the right hand side. 
+The relations with the dependent $P$ variables, $P_3$ and $P_4$, are implemented in principal submatrices $M_{4,4}$ and $M_{5,5}$ as $\mu - \varphi \geq 0$ and $\varphi - \mu \geq 0$ where $\mu$ is the left hand side of the relation and $\varphi$ is the right hand side. 
 The variables $q_4$ and $q_5$ correspond to $P_3$ and $P_4$ so we get
 \begin{align*}
     &q_4: \quad B_4 = \E{13} + 2(\E{55} - \E{44})\\
@@ -1319,7 +1324,6 @@ All that is left now is the construction of $C$. Here the $\varepsilon$ conditio
 After all this we are ready to solve the BMI. We construct and solve the BMI problem using Matlab and its symbolic toolkit. In the following chapter we will present the program and examples of its usage.
 
 
-
 \chapter{Program Structure and Overview}\label{KafliProgramStructure}
 In this chapter we will present the program that constructs the BMI feasibility problem and attempts to solve it. There will be an overview of the input and output, the structure of the program and there will be a brief discussion on the solver used. Lastly, we will go through some examples of its usage and results. The code can be found on GitHub \citep{Mverk2022}.
 
@@ -1327,13 +1331,14 @@ The program is written in Matlab and uses the Symbolic Math Toolbox extensively.
 
 The input of \code{BMIConstruction.m} is \code{n} and \code{NumGs}, the dimension of the system and number of $G$ matrices in the system. It outputs five symbolic matrices:
 \begin{enumerate}[i)]
-    \item \code{A} - A four dimensional symbolic matrix, i.e., a matrix of matrices.
-    \item \code{B} - A three dimensional symbolic matrix, i.e., a vector of matrices.
-    \item \code{C} - A two dimensional symbolic matrix.
-    \item \code{S} - A two dimensional symbolic matrix. It contains the coefficients of the $Q_iQ_j$ variables from the right side of the differentiation \eqref{RelationsGeneralCase}.
-    \item \code{Peqz} - A symbolic vector which contains the coefficients of the polynomial $P_\z$.
+    \item \code{A(:,:,:,:)} - A four dimensional symbolic matrix, i.e.\@ a matrix of matrices.
+    \item \code{B(:,:,:)} - A three dimensional symbolic matrix, i.e.\@ a vector of matrices.
+    \item \code{C(:,:)} - A two dimensional symbolic matrix.
+    \item \code{S(:,:)} - A two dimensional symbolic matrix. It contains the coefficients of the $Q_iQ_j$ variables from the right side of the differentiation \eqref{RelationsGeneralCase}.
+    \item \code{Peqz(:)} - A symbolic vector which contains the coefficients of the polynomial $P_\z$.
 \end{enumerate}
-The run time of \code{BMIConstruction.m} increases significantly with increasing $n$. However, it is only required to run this part the program once for each pair of \code{n} and \code{NumGs} since the output is a general BMI for the $n$-dimensional system. It is therefore recommended to save the output for the dimension of the desired system.
+
+The run time of \code{BMIConstruction.m} increases significantly with increasing $n$. However, it is only required to run this part the program once for each pair of \code{n} and \code{NumGs} since the output is a general BMI for the $n$-dimensional system. It is therefore recommended to save the output for the dimension of the desired system. Recall that the degree of the polynomials $P_c$ and $P_\z$ is always 4, independent of $n$.
 
 The program \code{BMISolution.m} takes as input
 \begin{enumerate}
@@ -1341,8 +1346,9 @@ The program \code{BMISolution.m} takes as input
     \item \code{G} - A vector of $n \times n$-matrices. The dimension of the vector depends on the number of $G$ matrices in the system.
     \item \code{p0} - A number. The parameter $p$ in the function $V(\x) = \pnorm{\x}$.
     \item \code{eps} - A parameter for the implementation of $Q - \varepsilon I \succeq 0$ and $c - \varepsilon \geq 0$.
-    \item \code{seed} - A seed for the random number generator for the replication of results.
+    \item \code{seed} - A seed for the random number generator for the replication of results. Starting with the same seed the generator generates the same sequence of random numbers.
 \end{enumerate}
+
 The matrices \code{F} and \code{G} are the matrices in the system \eqref{StoDiff}. The program loads in the symbolic matrices generated by \code{BMIConstruction.m} and assigns the values of the input \code{F} and \code{G} to their respective variables in the BMI matrices.
 
 The BMI optimization problem is solved using the SDPT3 solver in the CVX modeling system in Matlab. The problem can be formulated as an optimization problem with a linear objective function and a BMI constraint in the following way
@@ -1354,9 +1360,9 @@ The BMI optimization problem is solved using the SDPT3 solver in the CVX modelin
 \end{align}
 where
 \begin{align*}
-    F(\x, \X) \coloneqq F_0 + \sum_{i = 1}^nx_iK_i + \sum_{i = 1}^n\sum_{j = 1}^n X_{ij}L_{ij},
+    F(\x, \X) \coloneqq \sum_{i = 1}^n\sum_{j = 1}^n x_{ij}A_{ij} + \sum_{i = 1}^nx_iB_i + C,
 \end{align*}
-$F_0, K_i,L_{ij} \in \R{m\times m}$, and $\cc$ is a cost vector. This problem is non-convex and thus computationally challenging. A reformulation of these classes of problems is described in \citep{KZM2018BMI1} which casts the problem into a higher dimensional space where the BMI constraint is transformed into an LMI. The non-convexity of the problem transfers to an additional constraint. This added constraint is replaced by a convex alternative in order to obtain feasible and near-globally optimal points for the original problem \eqref{BMIOptimazationProblem1} \citep{KZM2018BMI1}. Using a \textit{penalized convex relaxation} the original problem is reformulated as
+$A_{ij}, B_i, C \in \R{m\times m}$, and $\cc$ is a cost vector. This problem is non-convex and thus computationally challenging. A reformulation of these classes of problems is described in \citep{KZM2018BMI1} which casts the problem into a higher dimensional space where the BMI constraint is transformed into an LMI. The non-convexity of the problem transfers to an additional constraint. This added constraint is replaced by a convex alternative in order to obtain feasible and near-globally optimal points for the original problem \eqref{BMIOptimazationProblem1} \citep{KZM2018BMI1}. Using a \textit{penalized convex relaxation} the original problem is reformulated as
 \begin{align}
     \begin{aligned}
     & \underset{\x \in \R{n}, X \in \Sn}{\text{minimize}} & & \cc^T\x + \eta\left(\text{tr}\{X\} - 2\x_0^T\x + \x_0^T\x_0\right)\\
@@ -1364,7 +1370,7 @@ $F_0, K_i,L_{ij} \in \R{m\times m}$, and $\cc$ is a cost vector. This problem is
     & & & X - \x\x^T \in \mathcal{C},
     \end{aligned}
 \end{align}
-where $\Sn$ is the set of all positive semi-definite $n \times n$-matrices, $\x_0$ is an initial guess of the solution, $\eta$ is a penalty parameter, $\text{tr}\{X\}$ is the trace of the matrix $X$ and $\mathcal{C}$ is one of the following sets
+where $\Sn$ is the set of all symmetric $n \times n$-matrices, $\x_0$ is an initial guess of the solution, $\eta$ is a penalty parameter, $\text{tr}\{X\}$ is the trace of the matrix $X$ and $\mathcal{C}$ is one of the following sets
 \begin{align*}
     &\mathcal{C}_1 = \{H\in \Sn \mid H\succeq 0\}\\
     &\mathcal{C}_2 = \{H\in \Sn \mid H_{ii} \geq 0,\, H_{ii}H_{jj} \geq H_{ij}^2, \, \forall i,j\in\{1,\ldots, n\}\}\\
@@ -1486,7 +1492,7 @@ Then $V(\x) = \nnorm{\x}{Q}{2}$ is a Lyapunov function of the system and GASiP i
 \end{align*}
 as a sum-of-squares with the help of the SOSTOOLS in Matlab. This method requires guessing a suitable $Q$ matrix along with testing various values for the parameters $c$ and $p$.
 
-In \citep{Ha2019BMI} they managed to replicate the results from \citep{HGGS2018localLya} by formulating the problem as a BMI feasibility problem with the same method as used in the previous chapter in this thesis. However, only in the case when $n = 2$ and by scanning the parameter space of $P_3$ and $P_4$ and verifying if $P \succeq 0$. I.e. the BMI was not solved.
+In \citep{Ha2019BMI} they managed to replicate the results from \citep{HGGS2018localLya} by formulating the problem as a BMI feasibility problem with the same method as used in the previous chapter in this thesis. However, only in the case when $n = 2$ and by scanning the parameter space of $P_3$ and $P_4$ and verifying if $P \succeq 0$. That is, the BMI was not solved.
 
 The $Q$ matrix used in the aforementioned papers is the following:
 \begin{align*}
@@ -1592,7 +1598,7 @@ eigP =
 Again, the program is successful in finding a solution for parameters where the sum-of-squares method failed \citep{HGGS2018localLya}.
 
 \subsection{Two Noise Matrices}
-Next we will examine a system with two noise terms, i.e. a system of the form
+Next we will examine a system with two noise terms, i.e.\@ a system of the form
 \begin{align*}
     d\X(t) = F\X(t)dt + G^1\X(t)dW_1 + G^2\X(t)dW_2
 \end{align*}
@@ -1613,7 +1619,7 @@ where we let
 \end{align*}
 The eigenvalues of $F$ are $\lambda_{\pm} = 3/2 \pm i\sqrt{15}$ so the deterministic system $\Dot{x} = Fx$ is unstable since $\text{Re}(\lambda_\pm) > 0$.
 
-By Theorem \ref{ThmSpecialCaseAlmennast}, we know that the function $V(\x) = \nnorm{\x}{}{p}$ is a Lyapunov function of the system for any $p$ such that
+By Theorem \ref{ThmSpecialCaseAlmennast}, we know that the function $V(\x) = \nnorm{\x}{}{p}$ is a Lyapunov function of the stochastic system for any $p$ such that
 \begin{align*}
     0 < p < 1 - \frac{2\max{(a_1, a_2)}}{\sigma_1^2 + \sigma_2^2} = \frac{1}{5}.
 \end{align*}
@@ -1660,7 +1666,7 @@ eigP =
 \end{lstlisting}
 However, by increasing the value of $p$ much further we find no solution with the program.
 
-\subsection{Three Dimensional System}
+\subsection{Three Dimensional System}\label{Kafli 3 dimensional system}
 Let us now consider a three dimensional system of the form
 \begin{align*}
     d\X(t) = F\X(t)dt + G\X(t)dt
@@ -1718,7 +1724,7 @@ Since the deterministic system is stable we know that $F^TQ + QF \prec 0$ and by
 \begin{align}\label{ineq manageable}
     F^T Q + QF + G^T Q G \prec 0
 \end{align}
-since $G^T Q G \succeq 0$. The second term of \eqref{H(x)lokajafna split} can therefore be regarded as a 'bad' term, i.e., it always decreases $H(\x)$. The third term can, however, with a suitable $Q$, increase the value of $H(\x)$ and negate the negative effects of the second term. The case of $p = 2$ is a common motif in the literature. In that case the third term vanishes and \eqref{H(x)lokajafna split} becomes more manageable for analysis, e.g. the inequality \eqref{ineq manageable} is an LMI which can be solved for $Q$ with semi-definite programming. However, a stochastic system, with a corresponding unstable deterministic system, does not have a Lyapunov function of the form $V(\x) = \nnorm{\x}{Q}{2}$ since the third term of \eqref{H(x)lokajafna split} is not there to weigh up the first two terms. The Matlab program does not need the restriction of $p = 2$ and can utilize the third term to assert GASiP of the origin by finding a suitable $Q$, which is an improvement to existing methods.
+since $G^T Q G \succeq 0$. The second term of \eqref{H(x)lokajafna split} can therefore be regarded as a 'bad' term, i.e.\@ it always decreases $H(\x)$. The third term can, however, with a suitable $Q$, increase the value of $H(\x)$ and negate the negative effects of the second term. The case of $p = 2$ is a common motif in the literature. In that case the third term vanishes and \eqref{H(x)lokajafna split} becomes more manageable for analysis, e.g.\@ the inequality \eqref{ineq manageable} is an LMI which can be solved for $Q$ with semi-definite programming. However, a stochastic system, with a corresponding unstable deterministic system, does not have a Lyapunov function of the form $V(\x) = \nnorm{\x}{Q}{2}$ since the third term of \eqref{H(x)lokajafna split} is not there to weigh up the first two terms. The Matlab program does not need the restriction of $p = 2$ and can utilize the third term to assert GASiP of the origin by finding a suitable $Q$, which is an improvement to existing methods.
 
 \chapter{Conclusions}
 In this thesis we have studied global asymptotic stability in probability (GASiP) of autonomous, linear SDEs with constant coefficients
@@ -1738,7 +1744,7 @@ This condition was studied analytically on a one-dimensional system and a specif
 
 The main part of this thesis was showing how this condition can be formulated as a BMI feasibility problem. The construction of the BMI was explained in detail for a general $n$-dimensional system and a general two-dimensional system was used as an example for further explanation. The solution of the BMI provides $Q$ and $c$ for a given system and $p > 0$ and confirms the existence of a Lyapunov function.
 
-We have designed and implemented a Matlab program which constructs a general BMI and solves it numerically for a given system. An overview of the program's structure, inputs and outputs was presented and the solver and relaxation methods were discussed. We have applied the program to concrete examples, e.g. the damped harmonic oscillator, and compared our results to results from previous methods. We have showed that our method improves upon previous results from the literature by finding a Lyapunov function for parameters where other methods have been unsuccessful.
+We have designed and implemented a Matlab program which constructs a general BMI and solves it numerically for a given system. An overview of the program's structure, inputs and outputs was presented and the solver and relaxation methods were discussed. We have applied the program to concrete examples, e.g.\@ the damped harmonic oscillator, and compared our results to results from previous methods. We have showed that our method improves upon previous results from the literature by finding a Lyapunov function for parameters where other methods have been unsuccessful.
 
 \bibliography{LyapBibUniform.bib}
 
