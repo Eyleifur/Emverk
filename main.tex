@@ -247,7 +247,7 @@ In this thesis we will expand on the method presented in \citep{Ha2019BMI} and i
 
 The Matlab code can be found on GitHub \citep{Mverk2022}.
 
-\chapter{Preliminaries}\label{KafliLMI&BMI}
+\chapter{Preliminaries}
 \section{Linear and Bilinear Matrix Inequalities}\label{SectionLMIBMI}
 Linear matrix inequalities (LMI) are a useful tool to solve various optimization problems and problems that arise in control theory \citep{BGFB1994LMIincontrol, BlMi2008setbook, chesi2010LMIsurvey, FSO2013fuzzylya, chesi2009, HaTi2002cdc}. Before we formally define LMIs we have to define \emph{positive definiteness} of a matrix and other related matrix properties.
 \begin{definition}\label{Definition PosDef}
@@ -303,7 +303,7 @@ Particularly, if $\vv$ is an eigenvector of $Q$ with corresponding eigenvalue $\
 \end{align*}
 Now, $\vv$ is an eigenvector so $\vv \neq \0$ and $\norm{\vv} > 0$. Therefore, $\lambda > 0$.
 
-Let's now assume that all eigenvalues of $Q$ are strictly positive. We want to show that $\x^T Q \x > 0$ holds for all $\x \in \R{n}$. According to Lemma \ref{LemmaOrthogonalEigenvectors} the eigenvectors of $Q$ are orthogonal and they can be normalized such that their length is 1. Let $\lambda_1, \ldots, \lambda_n$ be the eigenvalues of $Q$ and $\vv_1, \ldots, \vv_n$ be their corresponding orthonormal eigenvectors. Now, let $P$ be the $n\times n$ matrix whose columns are the eigenvectors $\vv_1, \ldots, \vv_n$ and let $D$ be the $n\times n$ matrix whose diagonal contains the eigenvalues $\lambda_1, \ldots, \lambda_n$. Since the columns of $P$ are orthonormal we have
+Let's now assume that all eigenvalues of $Q$ are strictly positive. We want to show that $\x^T Q \x > 0$ holds for all $\x \in \R{n}\setminus \{\0\}$. According to Lemma \ref{LemmaOrthogonalEigenvectors} the eigenvectors of $Q$ are orthogonal and they can be normalized such that their length is 1. Let $\lambda_1, \ldots, \lambda_n$ be the eigenvalues of $Q$ and $\vv_1, \ldots, \vv_n$ be their corresponding orthonormal eigenvectors. Now, let $P$ be the $n\times n$ matrix whose columns are the eigenvectors $\vv_1, \ldots, \vv_n$ and let $D$ be the $n\times n$ matrix whose diagonal contains the eigenvalues $\lambda_1, \ldots, \lambda_n$. Since the columns of $P$ are orthonormal we have
 \begin{align*}
     PP^T = I
 \end{align*}
@@ -361,7 +361,7 @@ where $\x\in\R{m}$ and $F_i \in \R{n\times n}$ are symmetric matrices, $i = 0,\l
 The LMI \eqref{LMI} can be interpreted as a system of polynomial inequalities where the number of polynomials is the same as the size of the LMI \citep{vABr2000lmibmi}.
 
 We want to show that LMIs form convex constraints on $\x$. Convexity is a desirable property since convex optimization problems are solvable quite efficiently by standard software \citep{vABr2000lmibmi}.
-\begin{definition}\label{Kýptni}
+\begin{definition}
 A set $X \subset \R{n}$ is said to be convex if
     \begin{align*}
         \lambda x + (1 - \lambda)y \in X
@@ -369,7 +369,7 @@ A set $X \subset \R{n}$ is said to be convex if
 for all $x,y\in X$ and $\lambda \in [0,1]$.
 \end{definition}
 We want to show that the set $\{\x\in\R{m} \mid F(\x) \succ 0\}$ is convex where $F(\x)$ is an LMI as in \eqref{LMI}.
-\begin{theorem}\label{KýptniLMI}
+\begin{theorem}
 Let $F(\x)$ be as in Definition \ref{LMI}. Then the set $C \coloneqq \{\x\in\R{m} \mid F(\x) \succ 0\}$ is convex.
 \end{theorem}
 \begin{proof}
@@ -388,15 +388,15 @@ Optimization problems that cannot be written as an LMI can often be written as a
 
 \begin{definition}\label{BMIDefinitionGeneral}
 A \textit{bilinear matrix inequality} is an inequality of the form
-    \begin{align}
+    \begin{align*}
         F(\x, \y) = F_0 + \sum_{i = 1}^nx_iF_i + \sum_{j = 1}^m y_jG_j + \sum_{i = 1}^n \sum_{j = 1}^m x_iy_j H_{ij} \succ 0
-    \end{align}
+    \end{align*}
 where $\x\in \R{n}$, $\y\in \R{m}$ and $F_0, F_i, G_j, H_{ij}$ are symmetric matrices of the same size, $i = 1, \ldots, n$, $j = 1, \ldots, m$.
 \end{definition}
 In this thesis we will use a more specific form of a BMI, namely
-\begin{align}\label{BMIDefinition}
+\begin{align*}
     F(\x) = F_0 + \sum_{i = 1}^n x_i F_i + \sum_{i = 1}^n \sum_{j = 1}^n x_ix_j G_{ij} \succ 0
-\end{align}
+\end{align*}
 where $\x \in \R{n}$ and $F_0, F_i, G_{ij} \in \R{m \times m}$ are symmetric matrices, $i,j = 1, \ldots, n$.
 
 Bilinear matrix inequalities are not generally convex which makes feasibility problems significantly more difficult computationally.
@@ -441,9 +441,9 @@ The zero solution $\X(t) \eqas 0$ to the SDE \eqref{autonomousGeneralSDEeq} is s
     \end{align*}
     \item \textit{Globally asymptotically stable in probability} (GASiP) if it is SiP and for any $\x \in \R{n}$ we have
     \begin{align*}
-        \Pb\left\{\lim_{t\to \infty} \norm{\X^\x(t)} = 0\right\} = 1
+        \Pb\left\{\lim_{t\to \infty} \norm{\X^\x(t)} = 0\right\} = 1.
     \end{align*}
-    \item \textit{Exponentially $p$-stable in probability} ($p$-ES) if for $p > 0$ there exists constants $A, \alpha > 0$ such that
+    \item \textit{Exponentially $p$-stable in probability} ($p$-ES) if for $p > 0$ there exist constants $A, \alpha > 0$ such that
     \begin{align*}
         \Eb\left\{\norm{\X^\x(t)}^p \right\} \leq A\norm{\x}^p e^{-\alpha t}
     \end{align*}
@@ -481,16 +481,16 @@ which has a stochastic counterpart, the so-called \textit{generator}.
 
 \begin{definition}
     Consider the SDE \eqref{autonomousGeneralSDEeq}. The \textit{generator} associated with the system for some appropriately differentiable $V \colon \mathcal{U} \to \R{}$, $\mathcal{U} \subset \R{n}$ is given by
-    \begin{align}
+    \begin{align*}
         LV(\x) \coloneqq \nabla V(\x)\cdot \fb(\x) + \frac{1}{2}\sums{i,j}{n}\sums{u}{U} g_i^u(\x) g_j^u(\x) \frac{\partial^2 V}{\partial x_i \partial x_j}(\x).
-    \end{align}
+    \end{align*}
 \end{definition}
 
 In the case of the linear autonomous SDE with constant coefficients \eqref{autonomousConstantCoeffSDEeq} the generator is
 
-\begin{align}
+\begin{align*}
     LV(\x) = \sums{i,j}{n}F_{ij}x_j\frac{\partial V}{\partial x_i}(\x) + \frac{1}{2}\sums{i,j,k,l}{n}\sums{u}{U}x_k x_l G_{ik}^u G_{jl}^u \frac{\partial^2 V}{\partial x_i \partial x_j}(\x)
-\end{align}
+\end{align*}
 
 where $F_{ij}$ and $G_{ij}^u$ are the components of the matrices $F$ and $G^u$.
 
@@ -649,19 +649,19 @@ Let $\lambdamin$ and $\lambdamax$ be the minimum and maximum eigenvalues of $Q$,
 \end{proof}
 
 Recall that the generator of the system \eqref{StoDiff} is
-\begin{align}\label{ConstantLVGenerator}
+\begin{align*}
     LV(\x) = \sums{i,j}{n}F_{ij}x_j\frac{\partial V}{\partial x_i}(\x) + \frac{1}{2}\sums{i,j,k,l}{n}\sums{u}{U}x_k x_l G_{ik}^u G_{jl}^u \frac{\partial^2 V}{\partial x_i \partial x_j}(\x).
-\end{align}
+\end{align*}
 For $V(\x) = \pnorm{\x}$ we obtain the following formula for the generator.
 \begin{lemma}\label{LemmaLVShorthand}
 Let $V(\x) = \pnorm{\x}$, $Q \succ 0$ and $p > 0$. Then
-\begin{align}\label{LV equation}
+\begin{align*}
     LV(\x) = -\frac{p}{2}\nnorm{\x}{Q}{p - 4}H(\x), \quad \forall \x \in\R{n}\setminus \{\0\},
-\end{align}
+\end{align*}
 where
 \begin{align}\label{H(x) definition}
 \begin{split}
-    H(\x) &= -\x^T (F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u) \x\nnorm{\x}{Q}{2}\\
+    H(\x) &= -\x^T \left(F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u\right) \x\nnorm{\x}{Q}{2}\\
     &\quad+ \frac{2 - p}{4} \sum_{u = 1}^U (\x^T (QG^u + (G^u)^TQ)\x)^2.
 \end{split}
 \end{align}
@@ -675,9 +675,9 @@ The polynomial $H(\x)$ is a homogeneous polynomial of order 4, i.e. $H(k\x) = k^
 Let $k\in\R{}$. Then we get
 \begin{align*}
 \begin{split}
-    H(k\x) &= -(k\x)^T(F^TQ + QF + \sum_{u=1}^U((G^u)^TQG^u))(k\x)\nnorm{k\x}{Q}{2}\\
+    H(k\x) &= -(k\x)^T\left(F^TQ + QF + \sum_{u=1}^U(G^u)^TQG^u\right)(k\x)\nnorm{k\x}{Q}{2}\\
     &\quad + \frac{2 - p}{4}\sum_{u=1}^U((k\x)^T (QG^u + (G^u)^TQ)(k\x))^2\\
-    &= -k^4\x^T(F^TQ + QF +\sum_{u = 1}^U ((G^u)^T Q G^u))\x\nnorm{\x}{Q}{2}\\
+    &= -k^4\x^T\left(F^TQ + QF +\sum_{u = 1}^U (G^u)^T Q G^u\right)\x\nnorm{\x}{Q}{2}\\
     &\quad + k^4 \frac{2 - p}{4}\sum_{u=1}^U(\x^T(QG^u + (G^u)^TQ)\x)^2\\
     &= k^4H(\x).
 \end{split}
@@ -708,21 +708,25 @@ We have transformed condition $ii)$ into a more manageable form. Since $ii)$ is 
 
 The case $p = 2$ is a common theme in the literature in the study of stability of linear SDEs. This leads to the simplification of the polynomial \eqref{H(x) definition} to
 \begin{align*}
-    H(\x) = -\x^T (F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u) \x\nnorm{\x}{Q}{2}
+    H(\x) = -\x^T \left(F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u\right) \x\nnorm{\x}{Q}{2}
 \end{align*}
-and results in a more manageable analysis of the inequality $H(\x) \geq c\nnorm{\x}{}{4}$. The second term of \eqref{H(x) definition} is quadratic in the entries of $Q$. This non-linearity of \eqref{H(x) definition} vanishes when $p = 2$ and the determination of $Q \succ 0$ such that the inequality holds becomes analytically feasible. However, this assumption is very restrictive when studying stability of stochastic systems. See Chapter \ref{Kafli 3 dimensional system} for further discussion.
+and results in a more manageable analysis of the inequality $H(\x) \geq c\nnorm{\x}{}{4}$. The second term of \eqref{H(x) definition} is quadratic in the entries of $Q$. This non-linearity vanishes when $p = 2$. Furthermore, $\nnorm{\x}{Q}{2} > 0$ when $\x \neq \0$ so $H(\x) > 0$ if and only if
+\begin{align*}
+    -\x^T \left(F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u\right) \x > 0.
+\end{align*}
+It is therefore sufficient to study $H(\x) / \nnorm{\x}{Q}{2}$ which is linear in the entries of $Q$. Determining $Q \succ 0$ such that the inequality \eqref{H(x)Ineq3} holds therefore becomes analytically feasible. However, this assumption is very restrictive when studying the stability of stochastic systems. See Chapter \ref{Kafli 3 dimensional system} for further discussion.
 
 Before we go on to describe the general method of finding $Q$ and $c$ by constructing a BMI and solving it we will discuss some special cases which can be studied analytically and, therefore, do not require the BMI method to determine if the origin of system is GASiP.
 
 \section{Analytic Examples}\label{SectionAnalyticExamples}
-In the following sections we will first consider a single dimensional system and then consider a system of a specific form. In both cases, the conditions a system needs to fulfill such that \eqref{H(x)Ineq3} holds and $V(\x) = \pnorm{\x}$ is a Lyapunov function are quite simple.
+In the following sections we will first consider a one-dimensional system and then consider a system of a specific form. In both cases, the conditions a system needs to fulfill such that \eqref{H(x)Ineq3} holds and $V(\x) = \pnorm{\x}$ is a Lyapunov function are quite simple.
 
 
-\subsection{One Dimensional System}
+\subsection{One-Dimensional System}
 We start by looking at the case when $n = 1$. Then the system \eqref{StoDiff} becomes
-\begin{align}\label{SDE 1d}
+\begin{align*}
     d\X(t) = a\X(t)dt + \sum_{u = 1}^U \sigma_u \X(t) dW_u(t)
-\end{align}
+\end{align*}
 where $a, \sigma_u \in \R{}$. Our candidate function $V$ is
 \begin{align*}
     V(x) = \pnorm{x} = x^p Q^{p/2}
@@ -838,7 +842,7 @@ Note that the LMI \eqref{LMI diagonal noise} was achieved without specifying $n$
 \begin{theorem}\label{ThmLyapunovFunc sI Fas n2 U1}
 Let $F\in\R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetric matrix and $a \in \R{}$. Furthermore, let $G \in \R{n \times n}$ be of the form $G = \sigma I$, $\sigma\in \R{}$. Then the origin of the system
 \begin{align*}
-    d\X(t) = F\X(t)dt + G\X(t)dW(t).
+    d\X(t) = F\X(t)dt + G\X(t)dW(t)
 \end{align*}
 is GASiP if
 \begin{align*}
@@ -851,7 +855,7 @@ Note that we have $U = 1$ in Theorem \ref{ThmLyapunovFunc sI Fas n2 U1}. However
 \begin{theorem}
 Let $F\in \R{n\times n}$ be of the form $F = A + aI$ where $A$ is an antisymmetric matrix and $a \in \R{}$. Furthermore, let $G^u \in \R{n\times n}$ be of the form $G^u = \sigma_u I$, $u = 1,\ldots, U$. Then the origin of the system
 \begin{align*}
-    d\X(t) = F\X(t)dt + G\X(t)dW(t).
+    d\X(t) = F\X(t)dt + \sum_{u=1}^U G^u\X(t)dW_u(t)
 \end{align*}
 is GASiP if
 \begin{align*}
@@ -883,7 +887,7 @@ where $a' \coloneqq \max\{a_1, \ldots, a_n\}$ and $S = \sum\limits_{u = 1}^U \si
 \begin{theorem}\label{ThmSpecialCaseAlmennast}
 Let $F \in \R{n\times n}$ be of the form $F = A + \diag(\av)$ where $A$ is an antisymmetric matrix and $\av\in\R{n}$. Furthermore, let $G^u \in \R{n \times n}$ be of the form $G^u = \sigma_u I$, $u = 1,\ldots, U$. Then the origin of the system
 \begin{align*}
-    d\X(t) = F\X(t)dt + \sum_{u=1}^U G^u\X(t)dW_u(t).
+    d\X(t) = F\X(t)dt + \sum_{u=1}^U G^u\X(t)dW_u(t)
 \end{align*}
 is GASiP if
 \begin{align*}
@@ -894,7 +898,7 @@ where $a' = \max\{a_1, \ldots a_n\}$ and $S = \sum\limits_{u = 1}^U \sigma_u^2$.
 
 For more special cases and examples see \citep{HGGS2018localLya} and \citep{sdestab2012khaminskii}.
 
-\section{Construction of the BMI Problem}\label{SectionConstrBMIProblem}
+\section{Construction of the BMI Problem}
 In the beginning of this chapter we showed that condition $ii)$ of Theorem \ref{ThmLyaGasip} can be written as the inequality \eqref{H(x)Ineq3}
 \begin{align*}
     H(\x) \geq c\norm{\x}^4
@@ -915,9 +919,9 @@ From inequality \eqref{H(x)Ineq3} we define the polynomial
 The condition $P_c(\x) \geq 0$, $\forall \x \in \R{n}$, is equivalent to (\ref{H(x)Ineq3}). To determine if the polynomial $P_c$ is positive for all $\x \in \R{n}$ we attempt to equate it to a sum-of-squares polynomial.
 
 We want to find a symmetric positive definite matrix $Q\in \R{n\times n}$, symmetric positive semi-definite matrix $P \in \R{m \times m}$, $m \coloneqq \frac{n(n + 1)}{2}$, and $c > 0$ such that
-\begin{align}\label{P_Z definition}
+\begin{align*}
     P_\z \coloneqq \z^T P \z = P_c(\x)
-\end{align}
+\end{align*}
 where $\z$ is a vector whose elements are all the combinations of second order terms using the elements of $\x$. That is, it contains the elements $\x^{\balpha}$ where $\balpha$ is a multi-index with $|\balpha| = 2$, a total of $m = \frac{n(n + 1)}{2}$ elements. For example, if $n = 2$ then $\z = (x_1^2, x_1x_2, x_2^2)$ and if $n = 3$ then $\z = (x_1^2, x_1x_2, x_1x_3, x_2^2, x_2x_3, x_3^2)$.
 
 The maximum number of unique elements in the matrices $Q$ and $P$ are $m$ and $k \coloneqq m(m + 1) / 2$, respectively.
@@ -937,9 +941,9 @@ If $P \succeq 0$ then the polynomial $P_\z = \z^T P \z$ is a sum of squared poly
 \end{theorem}
 \begin{proof}
 By Lemma \ref{LemmaOrthogonalEigenvectors} we can write the matrix $P$ as
-\begin{align}
+\begin{align*}
     P = BDB^T
-\end{align}
+\end{align*}
 where $D \in \R{m \times m}$ is a diagonal matrix whose diagonal contains the eigenvalues of $P$ and $B \in \R{m \times m}$ is a matrix whose columns are the orthogonal eigenvectors of $P$. Since $P$ is a positive semi-definite matrix its eigenvalues are all non-negative, by Theorem \ref{ThmPosDefPosEig}.
 
 Let $(\bb_i)_{1\leq i \leq m}$ be the orthogonal column vectors of $B$
@@ -966,7 +970,7 @@ and let $\lambda_1, \lambda_2, \ldots, \lambda_m$ be the eigenvalues of $P$. The
 where each of $\innf{\z}{\bb_i} \coloneqq \sum\limits_{j = 1}^m b_{ji}z_j$, $1 \leq i \leq m$, and $z_j$ is a monomial in $x_1, \ldots, x_n$ of degree 2. Hence, $P_\z$ is a sum of squared polynomials and thus non-negative.
 \end{proof}
 
-To determine the values of $c$, $Q$ and $P$ such that $P_c(\x) = P_\z$ we need to find relationships between the coefficients of $P_c$ and $P_\z$. Notice that $P_c(\x) = H(\x) - c\norm{\x}^4$ is a homogeneous polynomial of order $4$ since $H(\x)$ is a homogeneous polynomial of order $4$, by Theorem \ref{LemmaH(x)Homogeneous}. Also, the polynomial $P_\z$ only contains terms of order $4$. It is a sum of squared polynomials where the terms of the squared polynomials are the elements of $\z$. So, to get the relations between the coefficients of the two polynomials we can equate all fourth order partial derivatives of the polynomials with respect to $\x$.
+To determine the values of $c$, $Q$ and $P$ such that $P_c(\x) = P_\z$ we need to find relationships between the coefficients of $P_c$ and $P_\z$. Notice that $P_c(\x) = H(\x) - c\norm{\x}^4$ is a homogeneous polynomial of order $4$ since $H(\x)$ is a homogeneous polynomial of order $4$, by Lemma \ref{LemmaH(x)Homogeneous}. Also, the polynomial $P_\z$ only contains terms of order $4$. It is a sum of squared polynomials where the terms of the squared polynomials are the elements of $\z$. So, to get the relations between the coefficients of the two polynomials we can equate all fourth order partial derivatives of the polynomials with respect to $\x$.
 
 Let's define the set $M_n$ as the set of all $n$-dimensional multi-indices of length 4, i.e.\@ $M_n \coloneqq \{\balpha \in \R{n} \mid |\balpha| = 4\}$ and let $\alpha^n(i)$ be the $i$-th element of $M_n$ in reverse lexicographical order. For example
 \begin{align*}
@@ -1019,13 +1023,13 @@ and we want to determine the values $c, Q_1, Q_2,Q_3, P_1, P_2, P_3, P_4, P_5, P
     \succeq 0
 \end{align*}
 and $P_c(x ,y) = P_\z$. We equate the fourth order derivatives of the polynomials $P_c$ and $P_\z$
-\begin{align}\label{RelationsSpecialCase}
+\begin{align*}
     &D_{\alpha^2(1)} P_\z = D_{\alpha^2(1)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^4} = \frac{\partial^4 P_c}{\partial x^4} \nonumber\\
     &D_{\alpha^2(2)} P_\z = D_{\alpha^2(2)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^3 \partial y} = \frac{\partial^4 P_c}{\partial x^3 \partial y}\nonumber\\
     &D_{\alpha^2(3)} P_\z = D_{\alpha^2(3)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x^2 \partial y^2} = \frac{\partial^4 P_c}{\partial x^2 \partial y^2}\\
     &D_{\alpha^2(4)} P_\z = D_{\alpha^2(4)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial x \partial y^3} = \frac{\partial^4 P_c}{\partial x \partial y^3}\nonumber\\
     &D_{\alpha^2(5)} P_\z = D_{\alpha^2(5)} P_c \quad \Longleftrightarrow \quad \frac{\partial^4 P_\z}{\partial y^4} = \frac{\partial^4 P_c}{\partial y^4}\nonumber
-\end{align}
+\end{align*}
 which gives us the relations below. To reduce visual clutter we denote the elements of $F$ and $G$ with
 \begin{align*}
     F = \begin{pmatrix}
@@ -1165,7 +1169,7 @@ where
     &= \frac{1}{2}(2n^3 - 3n^2 + 3n + 2) + 3\binom{n}{4}\mathbf{1}_{n\geq4}.
 \end{align*}
 
-The dimension of the matrix $M$ is $N\times N$. It is determined by the dimensions of $Q$ and $P$ and the number of dependent relations, as explained in detail below. In the formula for $N$, the term $n$ corresponds to the dimension of the SDE (the size of the problem and thus the dimension of $Q$), the term $m = \frac{n(n + 1)}{2}$ is the dimension of $P$ and the 1 accounts for the variable $c$.
+The dimension of the matrix $M$ is $N\times N$. It is determined by the dimensions of $Q$ and $P$ and the number of dependent relations, as is explained in detail below. In the formula for $N$, the term $n$ corresponds to the dimension of the SDE (the size of the problem and thus the dimension of $Q$), the term $m = \frac{n(n + 1)}{2}$ is the dimension of $P$ and the 1 accounts for the variable $c$.
 
 In the following section we will refer to the variables $q_1, \ldots q_K$ of the BMI problem as $q$\textit{-variables} and we will refer to the variables $P_1, \ldots, P_k$ of the relations \eqref{RelationsGeneralCase} as $P$-variables.
 
@@ -1226,8 +1230,8 @@ First, we have a definition.
 Let $\e_i$ be the $i$-th unit vector in $\R{N}$. Then we define the $N\times N$ matrix $E_{ij}$ as
 \begin{align*}
     \E{ij} = \begin{cases}
-    \e_i \e_j^T &,\, i = j\\
-    \e_i \e_j^T + \e_j \e_i^T &,\, i \neq j 
+    \e_i \e_j^T, &\, i = j\\
+    \e_i \e_j^T + \e_j \e_i^T, &\, i \neq j 
     \end{cases}
 \end{align*}
 where $i,j = 1, \ldots, N$.
@@ -1246,14 +1250,14 @@ then the coefficient $\rho_{ij}$ of $Q_i Q_j$ is multiplied by $\E {aa} - \E {(a
 
 Thus the matrix $A_{ij}$ is a linear combination of the coefficients of $Q_iQ_j$ in the relations multiplied by the corresponding $E$ matrices.
 
-Next we go through the construction of the $B$ matrices. The first $m$ matrices are set as $\E{ij}$ where $(i,j)$ is the position of the elements of the upper triangular matrix of $Q$ in the $M$ BMI matrix. One $B$ matrix is set as the linear combination of coefficients of $c$ in the relations multiplied by their corresponding $E$ matrices, just as the $A$ matrices above. The rest of the $B$ matrices are used to implement the dependent relations.
+Next we go through the construction of the $B$ matrices. The first $m$ matrices are set as $\E{ij}$ where $(i,j)$ is the position of the elements of the upper triangular matrix of $Q$ in the BMI matrix $M$. One $B$ matrix is set as the linear combination of coefficients of $c$ in the relations multiplied by their corresponding $E$ matrices, just as the $A$ matrices above. The rest of the $B$ matrices are used to implement the dependent relations.
 
 Lastly, the $C$ matrix is used to implement $-\varepsilon I$ and $-\varepsilon$ to the constraints $Q - \varepsilon I \succeq 0$ and $c - \varepsilon \geq 0$, respectively, i.e.
 \begin{align*}
     C = -\varepsilon\left(\sum_{i = t}^K \E{ii}\right).
 \end{align*}
 
-To understand this construction more clearly we will go through the process in the case when $n = 2$ and $U = 1$, i.e.\@ a two dimensional system with one $G$ matrix, just as we did in the relations \eqref{RelationsWrittenOut n2}. For further explanation and to see the construction of a particular two dimensional system we refer to \citep{Ha2019BMI}.
+To understand this construction more clearly we will go through the process in the case when $n = 2$ and $U = 1$, i.e.\@ a two-dimensional system with one $G$ matrix, just as we did in the relations \eqref{RelationsWrittenOut n2}. For further explanation and to see the construction of a particular two-dimensional system we refer to \citep{Ha2019BMI}.
 
 Again, to reduce visual clutter we will denote
 \begin{align*}
@@ -1268,9 +1272,9 @@ Again, to reduce visual clutter we will denote
     \end{bmatrix}
 \end{align*}
 where $f_i,g_i \in \R{}$. We want to determine the variables $q_1, \ldots, q_6$ such that
-\begin{align}
+\begin{align*}
     M \coloneqq \sum_{i = 1}^3\sum_{j = i}^3 q_i q_j A_{ij} + \sum_{i = 1}^6 q_i B_i + C \succeq 0
-\end{align}
+\end{align*}
 where $A_{ij}, B_i, C \in \R{8\times 8}$. We let
 \begin{align*}
     &q_1 = Q_1,\\
@@ -1331,19 +1335,19 @@ The program is written in Matlab and uses the Symbolic Math Toolbox extensively.
 
 The input of \code{BMIConstruction.m} is \code{n} and \code{NumGs}, the dimension of the system and number of $G$ matrices in the system. It outputs five symbolic matrices:
 \begin{enumerate}[i)]
-    \item \code{A(:,:,:,:)} - A four dimensional symbolic matrix, i.e.\@ a matrix of matrices.
-    \item \code{B(:,:,:)} - A three dimensional symbolic matrix, i.e.\@ a vector of matrices.
-    \item \code{C(:,:)} - A two dimensional symbolic matrix.
-    \item \code{S(:,:)} - A two dimensional symbolic matrix. It contains the coefficients of the $Q_iQ_j$ variables from the right side of the differentiation \eqref{RelationsGeneralCase}.
+    \item \code{A(:,:,:,:)} - A four-dimensional symbolic matrix, i.e.\@ a matrix of matrices.
+    \item \code{B(:,:,:)} - A three-dimensional symbolic matrix, i.e.\@ a vector of matrices.
+    \item \code{C(:,:)} - A two-dimensional symbolic matrix.
+    \item \code{S(:,:)} - A two-dimensional symbolic matrix. It contains the coefficients of the $Q_iQ_j$ variables from the right-hand side of the differentiation \eqref{RelationsGeneralCase}.
     \item \code{Peqz(:)} - A symbolic vector which contains the coefficients of the polynomial $P_\z$.
 \end{enumerate}
 
 The run time of \code{BMIConstruction.m} increases significantly with increasing $n$. However, it is only required to run this part the program once for each pair of \code{n} and \code{NumGs} since the output is a general BMI for the $n$-dimensional system. It is therefore recommended to save the output for the dimension of the desired system. Recall that the degree of the polynomials $P_c$ and $P_\z$ is always 4, independent of $n$.
 
 The program \code{BMISolution.m} takes as input
-\begin{enumerate}
-    \item \code{F} - An $n\times n$-matrix.
-    \item \code{G} - A vector of $n \times n$-matrices. The dimension of the vector depends on the number of $G$ matrices in the system.
+\begin{enumerate}[i)]
+    \item \code{F} - An $n\times n$ matrix.
+    \item \code{G} - A vector of $n \times n$ matrices. The dimension of the vector depends on the number of $G$ matrices in the system.
     \item \code{p0} - A number. The parameter $p$ in the function $V(\x) = \pnorm{\x}$.
     \item \code{eps} - A parameter for the implementation of $Q - \varepsilon I \succeq 0$ and $c - \varepsilon \geq 0$.
     \item \code{seed} - A seed for the random number generator for the replication of results. Starting with the same seed the generator generates the same sequence of random numbers.
@@ -1363,14 +1367,14 @@ where
     F(\x, \X) \coloneqq \sum_{i = 1}^n\sum_{j = 1}^n x_{ij}A_{ij} + \sum_{i = 1}^nx_iB_i + C,
 \end{align*}
 $A_{ij}, B_i, C \in \R{m\times m}$, and $\cc$ is a cost vector. This problem is non-convex and thus computationally challenging. A reformulation of these classes of problems is described in \citep{KZM2018BMI1} which casts the problem into a higher dimensional space where the BMI constraint is transformed into an LMI. The non-convexity of the problem transfers to an additional constraint. This added constraint is replaced by a convex alternative in order to obtain feasible and near-globally optimal points for the original problem \eqref{BMIOptimazationProblem1} \citep{KZM2018BMI1}. Using a \textit{penalized convex relaxation} the original problem is reformulated as
-\begin{align}
+\begin{align*}
     \begin{aligned}
     & \underset{\x \in \R{n}, X \in \Sn}{\text{minimize}} & & \cc^T\x + \eta\left(\text{tr}\{X\} - 2\x_0^T\x + \x_0^T\x_0\right)\\
     & \text{subject to} & & F(\x, X) \succeq 0\\
     & & & X - \x\x^T \in \mathcal{C},
     \end{aligned}
-\end{align}
-where $\Sn$ is the set of all symmetric $n \times n$-matrices, $\x_0$ is an initial guess of the solution, $\eta$ is a penalty parameter, $\text{tr}\{X\}$ is the trace of the matrix $X$ and $\mathcal{C}$ is one of the following sets
+\end{align*}
+where $\Sn$ is the set of all symmetric $n \times n$ matrices, $\x_0$ is an initial guess of the solution, $\eta$ is a penalty parameter, $\text{tr}\{X\}$ is the trace of the matrix $X$ and $\mathcal{C}$ is one of the following sets
 \begin{align*}
     &\mathcal{C}_1 = \{H\in \Sn \mid H\succeq 0\}\\
     &\mathcal{C}_2 = \{H\in \Sn \mid H_{ii} \geq 0,\, H_{ii}H_{jj} \geq H_{ij}^2, \, \forall i,j\in\{1,\ldots, n\}\}\\
@@ -1666,8 +1670,8 @@ eigP =
 \end{lstlisting}
 However, by increasing the value of $p$ much further we find no solution with the program.
 
-\subsection{Three Dimensional System}\label{Kafli 3 dimensional system}
-Let us now consider a three dimensional system of the form
+\subsection{Three-Dimensional System}\label{Kafli 3 dimensional system}
+Let us now consider a three-dimensional system of the form
 \begin{align*}
     d\X(t) = F\X(t)dt + G\X(t)dt
 \end{align*}
@@ -1737,7 +1741,7 @@ where $F,G^u \in \R{n\times n}$, $\X(t)$ is an $n$-dimensional stochastic proces
 \end{align*}
 is an ideal candidate. We showed that a function of this form automatically fulfills all conditions except one. The last condition was transformed into the problem of finding $Q \succ 0$ and $c > 0$ such that $H(\x) \geq c\nnorm{\x}{}{4}$ where
 \begin{align*}
-    H(\x) &= -\x^T (F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u) \x\nnorm{\x}{Q}{2}\\
+    H(\x) &= -\x^T \left(F^T Q + QF + \sum_{u = 1}^U (G^u)^TQG^u\right) \x\nnorm{\x}{Q}{2}\\
     &\quad+ \frac{2 - p}{4} \sum_{u = 1}^U (\x^T (QG^u + (G^u)^TQ)\x)^2.
 \end{align*}
 This condition was studied analytically on a one-dimensional system and a specific $n$-dimensional system.
